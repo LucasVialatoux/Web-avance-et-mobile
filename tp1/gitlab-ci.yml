@@ -1,3 +1,4 @@
+image: openjdk:8-jdk-alpine
 
 variables:
   SPRING_PROFILES_ACTIVE: gitlab-ci
