@@ -5,13 +5,8 @@ stages:
   - test
   - deploy
 
-before_script:
-  - chmod +x mvnw
-
 build:
   stage: build
-  before_script: 
-    - . tp1/setup-mvn-proxy.sh
   script: 
     - cd tp1/usersspringboot
     - chmod +x mvnw
