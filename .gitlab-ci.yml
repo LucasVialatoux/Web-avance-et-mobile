@@ -12,16 +12,19 @@ cache:
 build:
   stage: build
   script:
+    - cd tp1/usersspringboot
     - mvn $MAVEN_CLI_OPTS compile
 
 test:
   stage: test
   script:
+    - cd tp1/usersspringboot
     - mvn $MAVEN_CLI_OPTS test
 
 deploy:
   stage: deploy
   script:
+    - cd tp1/usersspringboot
     - mvn $MAVEN_CLI_OPTS deploy
   only:
     - master
