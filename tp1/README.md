@@ -18,7 +18,7 @@ Créez un projet sur la forge, avec les caractéristiques habituelles (notamment
 
 ### Intégration continue
 
-TODO.
+Mettez en place un runner GitLab CI qui permettra de déployer et de tester votre travail à chaque push sur la branche master (voir M1IF01).
 
 ## Infrastructure
 
@@ -36,7 +36,7 @@ Installez pour l'instant nginx, sans le configurer en reverse proxy (cela sera f
 
 Déployez une page Web et des ressources à la racine du serveur et vérifiez que vous y accédez correctement.
 
-Mettez en place un test de vérification du fonctionnement d'nginx dans GitLab CI.
+Mettez en place un script de déploiement et un autre de vérification du fonctionnement d'nginx dans GitLab CI.
 
 ## Mise en place d'une application Spring Boot
 
@@ -48,11 +48,11 @@ Buildez, exécutez et testez cette application (*cf*. cours). Vous devez voir un
 
 &Agrave; l'aide du goal `mvn package`, créez un jar de votre application et copiez-le sur votre VM. Lancez le jar sur votre VM et testez que le serveur se lance de la même façon.
 
-Mettez en place un test de vérification du fonctionnement de Tomcat dans GitLab CI.
+Mettez en place un script de déploiement et de vérification du fonctionnement de Tomcat dans GitLab CI.
 
 ## Conception et déploiement de l'application
 
-Dans votre application, créez une classe User. 
+Dans votre application, ajoutez la classe User présente dans le dossier `sources`. 
 
 ### Création d'un bean Spring
 
@@ -60,11 +60,15 @@ Comme pour M1IF03, pour vous éviter d'avoir à gérer une BD, vous stockerez le
 
 En vous inspirant de [ce tutoriel](https://www.baeldung.com/java-dao-pattern), créez un DAO qui permettra de stocker des User (attention, l'implémentation de User est un peu différente de celle du tuto). Déclarez ensuite ce DAO comme un bean Spring en utilisant la méthode de votre choix (*cf*. cours).
 
-### Composants Web MVC
+Pour facilier la correction, l'interface du DAO vous est donnée dans le dossier `sources`
 
-TODO (login / logout)
+### Contrôleur Web MVC
 
-TODO : test
+Réalisez un contrôleur Spring annoté. Pour vous faciliter la tâche, les prototypes des méthodes `login()` et `authenticate()` sont donnés. &Agrave; vous de les implémenter.
+
+Créez également une méthode `logout()` surle même modèle.
+
+Testez, déployez sur votre VM et ajoutez un script de test GitLab CI.
 
 ### REST
 
@@ -72,12 +76,16 @@ En vous inspirant de [ce tuto](https://spring.io/guides/gs/rest-service/), mette
 
 Testez.
 
-Une fois la méthode GET réalisée, améliorez-le pour qu'il réponde à cette interface OpenAPI (**TODO**).
+Une fois la méthode GET réalisée, améliorez-le pour qu'il permette les opérations CRUD classique sur un utilisateur :
 
-Testez et déployez sur votre VM.
+- POST "/users" -> création
+- PUT "/user/login" -> mise à jour
+- DELETE "/user/login" -> Suppression
 
-Ajoutez un test dans le pipeline Gitlab qui crée un utilisateur et le récupère.
+On ne s'occupe pas ici du contrôle des autorisations d'accès à ce contrôleur.
+
+Testez, déployez sur votre VM et ajoutez un script de test GitLab CI.
 
 ### Négociation de contenus
 
-TODO
+Mettez en place un filtre de négociation de contenus en sortie, qui intercepte les GET et produit du HTML. Vous utiliserez le moteur de templating ThymeLeaf.
