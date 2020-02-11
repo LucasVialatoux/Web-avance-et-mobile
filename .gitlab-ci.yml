@@ -14,5 +14,6 @@ build:
     - . tp1/setup-mvn-proxy.sh
   script: 
     - cd tp1/usersspringboot
+    - chmod +x mvnw
     - ./mvnw package
 
