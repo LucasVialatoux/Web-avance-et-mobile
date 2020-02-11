@@ -12,7 +12,7 @@ build_job:
   before_script: 
     - . tp1/setup-mvn-proxy.sh
   script:
-    - cd tp1
+    - cd tp1/usersspringboot
     - mvn compile 
       -Dhttps.protocols=TLSv1.2
       -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository
@@ -28,7 +28,7 @@ test_job:
   before_script: 
     - . tp1/setup-mvn-proxy.sh
   script: 
-    - cd tp1
+    - cd tp1/usersspringboot
     - mvn test
       -Dhttps.protocols=TLSv1.2
       -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository
