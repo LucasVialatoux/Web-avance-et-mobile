@@ -14,7 +14,7 @@ Dans ce TP, vous allez mettre en place une partie du backend d'une application W
 
 Créez un projet sur la forge, avec les caractéristiques habituelles (notamment le `.gitignore`). Vous travaillerez en suivant la méthode qui vous correspond le mieux, mais au final, **seules seront évaluées les fonctionnalités poussées sur la branche `master`**.
 
-&Avrave; la fin de chaque TP, vous tagguerez le dernier commit avec le numéro du TP.
+&Agrave; la fin de chaque TP, vous tagguerez le dernier commit avec le numéro du TP.
 
 ### Intégration continue
 
@@ -46,17 +46,29 @@ Créez une nouvelle application Spring Boot à l'aide de https://start.spring.io
 
 Buildez, exécutez et testez cette application (*cf*. cours). Vous devez voir une page d'erreur sur le port 8080 de votre machine locale.
 
-&Al'aide du goal `mvn install`, créez un jar de votre application et copiez-le sur votre VM. Lancez le jar sur votre VM et testez que le serveur se lance de la même façon.
+&Agrave; l'aide du goal `mvn package`, créez un jar de votre application et copiez-le sur votre VM. Lancez le jar sur votre VM et testez que le serveur se lance de la même façon.
 
-Mettez en place un test de vérification du fonctionnement d'nginx dans GitLab CI.
+Mettez en place un test de vérification du fonctionnement de Tomcat dans GitLab CI.
 
 ## Conception et déploiement de l'application
 
-Dans votre application, créez une classe User. Comme pour M1IF03, pour vous éviter d'avoir à gérer une BD, vous stockerez les instances de cette classe dans une Map et placerez cette Map dans le contexte applicatif. 
+Dans votre application, créez une classe User. 
+
+### Création d'un bean Spring
+
+Comme pour M1IF03, pour vous éviter d'avoir à gérer une BD, vous stockerez les instances de cette classe User dans une List et placerez cette List dans le contexte applicatif. La différence est que c'est maintenant Spring qui gère ce contexte et que vous n'avez donc qu'à la déclarer comme un bean Spring.
+
+En vous inspirant de [ce tutoriel](https://www.baeldung.com/java-dao-pattern), créez un DAO qui permettra de stocker des User (attention, l'implémentation de User est un peu différente de celle du tuto). Déclarez ensuite ce DAO comme un bean Spring en utilisant la méthode de votre choix (*cf*. cours).
+
+### Composants Web MVC
+
+TODO (login / logout)
+
+TODO : test
 
 ### REST
 
-En vous inspirant de [ce tuto](https://spring.io/guides/gs/rest-service/), mettez en place un contrôleur REST qui permet d'accéder à un utilisateur.
+En vous inspirant de [ce tuto](https://spring.io/guides/gs/rest-service/), mettez en place un contrôleur REST qui permet d'accéder à un utilisateur. Ce contrôleur fera appel au bean défini à la question précédente pour accéder à la liste des utilisateurs.
 
 Testez.
 
@@ -65,12 +77,6 @@ Une fois la méthode GET réalisée, améliorez-le pour qu'il réponde à cette 
 Testez et déployez sur votre VM.
 
 Ajoutez un test dans le pipeline Gitlab qui crée un utilisateur et le récupère.
-
-### Traitement de requêtes "simples"
-
-TODO (login / logout)
-
-TODO : test
 
 ### Négociation de contenus
 
