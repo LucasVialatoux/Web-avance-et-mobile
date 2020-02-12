@@ -2,6 +2,7 @@ image: latest
 
 services:
   - java:latest
+  - maven:latest
 
 stages:
   - build
