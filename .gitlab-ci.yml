@@ -1,19 +1,9 @@
-image: latest
+image: maven:latest
 
 stages:
   - build
   - test
   - deploy
-
-
-.before: &before    
-  - sudo apt-get update
-  - sudo apt-get default-jdk
-  - sudo apt-get mvn
-
-default:
-  before_script:
-    - *before
 
 build:
   stage: build
