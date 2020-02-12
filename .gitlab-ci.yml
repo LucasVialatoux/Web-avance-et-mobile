@@ -1,4 +1,4 @@
-image: java:latest
+image: gitlab:dind
 
 variables:
   - DOCKER_TLS_CERTDIR: ""
