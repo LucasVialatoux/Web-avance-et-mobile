@@ -10,7 +10,7 @@ build:
   script: 
     - cd tp1/usersspringboot
     - chmod +x ./mvnw
-    - ./mvnw package
+    - ./mvnw compile
   artifacts:
     paths:
       - target/demo-0.0.1-SNAPSHOT.jar
