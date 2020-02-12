@@ -1,7 +1,7 @@
 image: gitlab:dind
 
 variables:
-  - DOCKER_TLS_CERTDIR: ""
+  DOCKER_TLS_CERTDIR: ""
 
 stages:
   - build
