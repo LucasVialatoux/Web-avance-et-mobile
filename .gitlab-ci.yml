@@ -1,7 +1,9 @@
 image: latest
 
-service:
-  - java:latest
+before_script:
+  -apt-get update
+  -apt-get default-jdk
+  -apt-get mvn
 
 stages:
   - build
@@ -12,8 +14,7 @@ build:
   stage: build
   script: 
     - cd tp1/usersspringboot
-    - chmod +x ./mvnw
-    - ./mvnw package
+    - mvn package
   artifacts:
     paths:
       - target/demo-0.0.1-SNAPSHOT.jar
