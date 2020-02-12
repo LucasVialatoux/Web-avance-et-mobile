@@ -1,5 +1,8 @@
 image: java:latest
 
+variables:
+  - DOCKER_TLS_CERTDIR: ""
+
 stages:
   - build
   - test
@@ -14,4 +17,4 @@ build:
   artifacts:
     paths:
       - target/demo-0.0.1-SNAPSHOT.jar
-
+      
