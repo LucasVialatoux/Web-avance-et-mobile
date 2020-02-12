@@ -1,4 +1,4 @@
-image: latest
+image: java:latest
 
 stages:
   - build
