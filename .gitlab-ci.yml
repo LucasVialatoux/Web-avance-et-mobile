@@ -1,15 +1,19 @@
 image: latest
 
-default:
-  before_script:
-    -apt-get update
-    -apt-get default-jdk
-    -apt-get mvn
-
 stages:
   - build
   - test
   - deploy
+
+
+.before: &before    
+  -apt-get update
+  -apt-get default-jdk
+  -apt-get mvn
+
+default:
+  before_script:
+    - *before
 
 build:
   stage: build
