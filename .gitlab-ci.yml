@@ -2,9 +2,6 @@ image: latest
 
 services:
   - java:latest
-  
-before_script:
-  - bundle install
 
 stages:
   - build
