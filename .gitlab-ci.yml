@@ -7,9 +7,9 @@ stages:
 
 
 .before: &before    
-  - apt-get update
-  - apt-get default-jdk
-  - apt-get mvn
+  - sudo apt-get update
+  - sudo apt-get default-jdk
+  - sudo apt-get mvn
 
 default:
   before_script:
