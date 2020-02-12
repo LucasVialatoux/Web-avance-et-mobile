@@ -1,9 +1,10 @@
 image: latest
 
-before_script:
-  -apt-get update
-  -apt-get default-jdk
-  -apt-get mvn
+default:
+  before_script:
+    -apt-get update
+    -apt-get default-jdk
+    -apt-get mvn
 
 stages:
   - build
