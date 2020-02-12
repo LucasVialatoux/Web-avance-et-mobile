@@ -10,6 +10,7 @@ build:
   script: 
     - cd tp1/usersspringboot
     - chmod -x ./mvnw
+    - chmod -x ./mvnw.cmd
     - ./mvnw package
   artifacts:
     paths:
