@@ -1,13 +1,25 @@
 package fr.univlyon1.m1if.m1if13.usersspringboot.controller;
 
+import java.util.Optional;
+
+import javax.naming.AuthenticationException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import fr.univlyon1.m1if.m1if13.usersspringboot.DAO.UserDao;
+import fr.univlyon1.m1if.m1if13.usersspringboot.model.User;
+
 @Controller
 public class OperationController {
 
-    // TODO récupérer le DAO...
+    @Autowired
+    private ApplicationContext ctx;
 
     /**
      * Procédure de login "simple" d'un utilisateur
@@ -17,7 +29,27 @@ public class OperationController {
      */
     @PostMapping("/login")
     public ResponseEntity<Void> login(@RequestParam("login") String login, @RequestParam("password") String password, @RequestHeader("Origin") String origin) {
-        return null;
+        UserDao dao = ctx.getBean(UserDao.class);
+        
+        Optional<User> user = dao.get(login);
+
+        if (!user.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            User u = user.get();
+            if (u.isConnected()) {
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);    
+            } else {
+                try {
+                    u.authenticate(password);
+                } catch(AuthenticationException e) {
+                    return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+                }
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Authentication", login);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        }
     }
 
     /**

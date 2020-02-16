@@ -6,8 +6,11 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
+import org.springframework.stereotype.Service;
+
 import fr.univlyon1.m1if.m1if13.usersspringboot.model.User;
 
+@Service
 public class UserDao implements Dao<User> {
 
     private Set<User> users = new HashSet<>();
@@ -17,8 +20,9 @@ public class UserDao implements Dao<User> {
         User user = null;
         Iterator<User> it = users.iterator();
         while(it.hasNext()) {
-            if (it.next().getLogin() == id) {
-                user = it.next();
+            User tmp = it.next();
+            if (tmp.getLogin() == id) {
+                user = tmp;
                 break;
             }
         }
@@ -30,7 +34,8 @@ public class UserDao implements Dao<User> {
         Set<String> set = new HashSet<>();
         Iterator<User> it = users.iterator();
         while(it.hasNext()) {
-            set.add(it.next().getLogin());
+            User tmp = it.next();
+            set.add(tmp.getLogin());
         }
         return set;
     }
