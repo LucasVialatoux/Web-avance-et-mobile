@@ -6,14 +6,21 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-import org.springframework.stereotype.Service;
-
 import fr.univlyon1.m1if.m1if13.usersspringboot.model.User;
 
-@Service
 public class UserDao implements Dao<User> {
 
+    private static UserDao userDao = new UserDao();
+
     private Set<User> users = new HashSet<>();
+
+    UserDao() {
+        this.save(new User("test", "test"));
+    }
+
+    public static UserDao createInstance() {
+        return userDao;
+    }
 
     @Override
     public Optional<User> get(String id) {

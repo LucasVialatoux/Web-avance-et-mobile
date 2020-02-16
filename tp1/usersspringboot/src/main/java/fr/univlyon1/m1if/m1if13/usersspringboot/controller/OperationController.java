@@ -33,9 +33,7 @@ public class OperationController {
         
         Optional<User> user = dao.get(login);
 
-        if (!user.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
+        if (user.isPresent()) {
             User u = user.get();
             if (u.isConnected()) {
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);    
@@ -46,9 +44,11 @@ public class OperationController {
                     return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
                 }
                 HttpHeaders headers = new HttpHeaders();
-                headers.add("Authentication", login);
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                headers.add("Authentication", origin);
+                return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
             }
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -56,7 +56,17 @@ public class OperationController {
      * Réalise la déconnexion
      */
     @PostMapping("/logout")
-    // TODO
+    public ResponseEntity<Void> logout(@RequestParam("login") String login) {
+        UserDao dao = ctx.getBean(UserDao.class);
+        
+        Optional<User> user = dao.get(login);
+        if (user.isPresent()) {
+            user.get().disconnect();
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+
 
     /**
      * Méthode destinée au serveur Node pour valider l'authentification d'un utilisateur.
@@ -66,6 +76,12 @@ public class OperationController {
      */
     @GetMapping("/authenticate")
     public ResponseEntity<Void> authenticate(@RequestParam("token") String token, @RequestParam("origin") String origin) {
-        return null;
+        if (token.equals(origin)) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authentification", origin);
+            return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
     }
 }
