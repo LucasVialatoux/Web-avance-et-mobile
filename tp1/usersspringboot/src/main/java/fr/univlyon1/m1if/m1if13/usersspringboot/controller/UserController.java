@@ -18,8 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class UserController {
-    private UserDao u;
-    
+    private UserDao u = UserDao.createInstance();
     /**
     * GET request
      * @param id
@@ -52,15 +51,13 @@ public class UserController {
      * @return 
     */
     @PutMapping("/user/login")
-    public User put(@RequestParam(value = "id") String id,
+    public String[] put(@RequestParam(value = "id") String id,
             @RequestParam(value = "login") String login,
             @RequestParam(value = "password") String password){
-        String[] params = null;
-        params[0]=login;
-        params[1]=password;
+        String[] params={login,password};
         Optional<User> user = u.get(id);
         u.update(user.get(),params);
-        return user.get();
+        return params;
     }
     
     /**
