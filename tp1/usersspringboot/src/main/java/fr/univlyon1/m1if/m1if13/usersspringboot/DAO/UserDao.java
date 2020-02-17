@@ -28,7 +28,7 @@ public class UserDao implements Dao<User> {
         Iterator<User> it = users.iterator();
         while(it.hasNext()) {
             User tmp = it.next();
-            if (tmp.getLogin() == id) {
+            if (tmp.getLogin().equals(id)) {
                 user = tmp;
                 break;
             }

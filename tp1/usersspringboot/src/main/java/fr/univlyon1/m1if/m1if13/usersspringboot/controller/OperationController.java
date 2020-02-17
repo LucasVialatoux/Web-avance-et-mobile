@@ -32,7 +32,7 @@ public class OperationController {
         UserDao dao = ctx.getBean(UserDao.class);
         
         Optional<User> user = dao.get(login);
-
+        
         if (user.isPresent()) {
             User u = user.get();
             if (u.isConnected()) {
