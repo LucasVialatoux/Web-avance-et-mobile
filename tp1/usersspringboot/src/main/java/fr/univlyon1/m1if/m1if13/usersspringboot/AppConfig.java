@@ -41,7 +41,7 @@ public class AppConfig implements WebMvcConfigurer {
         return UserDao.createInstance();
     }
     
-    @Bean
+    /*@Bean
     public ViewResolver viewResolver() {
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
         resolver.setTemplateEngine(TemplateEngines());
@@ -63,7 +63,7 @@ public class AppConfig implements WebMvcConfigurer {
         resolver.setPrefix("/WEB-INF/templates/");
         resolver.setTemplateMode(TemplateMode.HTML);
         return resolver;
-    }
+    }*/
 
     
 }
