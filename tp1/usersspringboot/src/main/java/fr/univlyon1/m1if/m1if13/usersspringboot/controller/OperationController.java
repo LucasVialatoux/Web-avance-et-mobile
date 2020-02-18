@@ -4,6 +4,13 @@ import java.util.Optional;
 
 import javax.naming.AuthenticationException;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.auth0.jwt.interfaces.JWTVerifier;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpHeaders;
@@ -46,7 +53,15 @@ public class OperationController {
                     return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
                 }
                 HttpHeaders headers = new HttpHeaders();
-                headers.add("Authentication", origin);
+                try {
+                    Algorithm algorithm = Algorithm.HMAC256("secret");
+                    String token = JWT.create()
+                        .withIssuer("auth0")
+                        .sign(algorithm);
+                    headers.add("Authentication", token);
+                } catch (JWTCreationException exception){
+                    //Invalid Signing configuration / Couldn't convert Claims.
+                }
                 return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
             }
         } else {
@@ -57,7 +72,7 @@ public class OperationController {
     /**
      * Réalise la déconnexion
      */
-    @PostMapping("/logout")
+    @DeleteMapping("/logout")
     public ResponseEntity<Void> logout(@RequestParam("login") String login) {
         UserDao dao = ctx.getBean(UserDao.class);
         
@@ -78,12 +93,18 @@ public class OperationController {
      */
     @GetMapping("/authenticate")
     public ResponseEntity<Void> authenticate(@RequestParam("token") String token, @RequestParam("origin") String origin) {
-        if (token.equals(origin)) {
-            HttpHeaders headers = new HttpHeaders();
-            headers.set("Authentification", origin);
-            return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        try {
+            Algorithm algorithm = Algorithm.HMAC256("secret");
+            JWTVerifier verifier = JWT.require(algorithm)
+                .withIssuer("auth0")
+                .build(); //Reusable verifier instance
+            DecodedJWT jwt = verifier.verify(token);
 
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authentication", token);
+            return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
+        } catch (JWTVerificationException exception){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
     }
 }
