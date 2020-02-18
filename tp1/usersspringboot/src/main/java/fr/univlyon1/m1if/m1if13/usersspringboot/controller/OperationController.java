@@ -28,7 +28,9 @@ public class OperationController {
      * @return Une ResponseEntity avec le JWT dans le header "Authentication" si le login s'est bien passé, et le code de statut approprié (204, 401 ou 404).
      */
     @PostMapping("/login")
-    public ResponseEntity<Void> login(@RequestParam("login") String login, @RequestParam("password") String password, @RequestHeader("Origin") String origin) {
+    public ResponseEntity<Void> login(@RequestParam("login") String login,
+    @RequestParam("password") String password,
+    @RequestHeader("Origin") String origin) {
         UserDao dao = ctx.getBean(UserDao.class);
         
         Optional<User> user = dao.get(login);
