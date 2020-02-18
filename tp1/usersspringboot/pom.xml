@@ -19,27 +19,52 @@
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency>
+                <dependency>
+                        <groupId>com.fasterxml.jackson.dataformat</groupId>
+                        <artifactId>jackson-dataformat-xml</artifactId>
+                </dependency>
+                <dependency>
+                        <groupId>com.fasterxml.jackson.core</groupId>
+                        <artifactId>jackson-databind</artifactId>
+                        <version>2.9.8</version>
+                </dependency>
+                <dependency>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-thymeleaf</artifactId>
+                </dependency>
+                <dependency>
+                        <groupId>org.thymeleaf</groupId>
+                        <artifactId>thymeleaf</artifactId>
+                        <version>3.0.9.RELEASE</version>
+                </dependency>
+                
+                <dependency>
+                        <groupId>org.thymeleaf</groupId>
+                        <artifactId>thymeleaf-spring4</artifactId>
+                        <version>3.0.9.RELEASE</version>
+                </dependency>
+                <dependency>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-web</artifactId>
+                </dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.junit.vintage</groupId>
-					<artifactId>junit-vintage-engine</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+                <dependency>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-test</artifactId>
+                        <scope>test</scope>
+                        <exclusions>
+                                <exclusion>
+                                        <groupId>org.junit.vintage</groupId>
+                                        <artifactId>junit-vintage-engine</artifactId>
+                                </exclusion>
+                        </exclusions>
+                </dependency>
+                <dependency>
+                        <groupId>org.json</groupId>
+                        <artifactId>json</artifactId>
+                        <version>20090211</version>
+                        <type>jar</type>
+                </dependency>
 	</dependencies>
 
 	<build>
