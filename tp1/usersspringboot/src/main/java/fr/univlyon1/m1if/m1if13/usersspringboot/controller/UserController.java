@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -21,8 +22,8 @@ public class UserController {
      * @param model
      * @return 
      */
-    @GetMapping(path="/users",produces=MediaType.TEXT_HTML_VALUE)
-    public String getOne(@RequestParam(value = "login",required = false) String id, Model model) {
+    @GetMapping(path="/users/{login}",produces=MediaType.TEXT_HTML_VALUE)
+    public String getOne(@PathVariable(value = "login",required = false) String id, Model model) {
         if (id==null || id.isEmpty()){
             model.addAttribute("list", new ArrayList<String>(u.getAll()) );
             return "users";
