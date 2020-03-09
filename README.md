@@ -1,11 +1,14 @@
 # M1IF13-2020
 
-Ce dépôt contient les énoncés et le code des TP de Web avancé et mobile pour 2019-2020.
+Projet réalisé par Paul Horcholle & Lucas Vialatoux
 
-## Description de l'application
+## TP1
+- Mise en place d'une API Spring Boot
 
-Dans cette UE, vous allez réaliser une application Web côté client, qui fait appel à plusieurs serveurs (mashup), pour différents types de traitements :
+## TP2
+- OpenAPI + CORS + Client
 
-- un serveur de gestion des utilisateurs et des tokens de connexion (ce TP),
-- un serveur de fichiers statiques côté client,
-- un serveur applicatif qui permettra de réaliser le métier de l'application (une application communautaire et géolocalisée).
+## URLs
+- YAML : 
+- Swagger généré : 
+- Client : http://192.168.75.38
