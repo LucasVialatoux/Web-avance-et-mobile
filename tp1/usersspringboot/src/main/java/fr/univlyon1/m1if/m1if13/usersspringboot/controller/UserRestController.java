@@ -27,7 +27,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 /**
  *
  * UserRestController
- GÃ¨re les requÃªtes suivantes : GET ; PUT ; POST ; DELETE;
+ Gère les requêtes suivantes : GET ; PUT ; POST ; DELETE;
  * 
  */
 @RestController
@@ -52,7 +52,28 @@ public class UserRestController {
                             @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = User.class))
                         }
-                )
+                ),
+                @ApiResponse(
+                            responseCode = "404",
+                            description = "User not found",
+                            content = @Content(
+                                    schema = @Schema(implementation = Void.class)
+                            )
+                    ),
+                @ApiResponse(
+                            responseCode = "406",
+                            description = "Not acceptable",
+                            content = @Content(
+                                    schema = @Schema(implementation = Void.class)
+                            )
+                    ),
+                @ApiResponse(
+                            responseCode = "400",
+                            description = "Bad request",
+                            content = @Content(
+                                    schema = @Schema(implementation = Void.class)
+                            )
+                    )
             }
     )
     @GetMapping(path="/user/{login}"
@@ -66,6 +87,21 @@ public class UserRestController {
      * produces JSON | XML
      * @return
     */
+    @Operation(
+            summary = "Get user list",
+            responses = {
+                @ApiResponse(
+                        responseCode = "200",
+                        description = "ok",
+                        content = {
+                            @Content(mediaType="application/xml",
+                                    schema = @Schema(implementation = User.class)),
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = User.class))
+                        }
+                )
+            }
+    )
     @GetMapping(path="/users"
     ,produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
     public ArrayList<String> getNormal(){
@@ -79,6 +115,28 @@ public class UserRestController {
      * @return 
      * @throws org.json.JSONException 
     */
+    @Operation(
+            summary = "Create new user",
+            responses = {
+                @ApiResponse(
+                        responseCode = "201",
+                        description = "created",
+                        content = {
+                            @Content(mediaType="application/xml",
+                                    schema = @Schema(implementation = User.class)),
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = User.class))
+                        }
+                ),
+                @ApiResponse(
+                            responseCode = "400",
+                            description = "Bad request",
+                            content = @Content(
+                                    schema = @Schema(implementation = Void.class)
+                            )
+                    )
+            }
+    )
     @PostMapping(path="/users"
             ,consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Void> post(@RequestBody String json) throws JSONException{
@@ -94,9 +152,31 @@ public class UserRestController {
      * @param password
      * @return 
     */
+    @Operation(
+            summary = "Create new user",
+            responses = {
+                @ApiResponse(
+                        responseCode = "201",
+                        description = "created",
+                        content = {
+                            @Content(mediaType="application/xml",
+                                    schema = @Schema(implementation = User.class)),
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = User.class))
+                        }
+                ),
+                @ApiResponse(
+                            responseCode = "400",
+                            description = "Bad request",
+                            content = @Content(
+                                    schema = @Schema(implementation = Void.class)
+                            )
+                    )
+            }
+    )
     @PostMapping(path="/users")
-    public ResponseEntity<Void> postNormal(@RequestParam(value = "login") String login,
-            @RequestParam(value = "password") String password){
+    public ResponseEntity<Void> postNormal(@Parameter(description = "User login", required = true) @RequestParam(value = "login") String login,
+            @Parameter(description = "User password", required = true) @RequestParam(value = "password") String password){
         User user = new User(login,password);
         u.save(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -111,10 +191,31 @@ public class UserRestController {
      * @param newPassword
      * @return 
     */
+    @Operation(
+            summary = "Create or update user",
+            responses = {
+                @ApiResponse(
+                        responseCode = "201",
+                        description = "created",
+                        content = {
+                            @Content(mediaType="x-www-form-url-encoded",
+                                    schema = @Schema(implementation = User.class))
+                        }
+                ),
+                @ApiResponse(
+                        responseCode = "200",
+                        description = "ok",
+                        content = {
+                            @Content(mediaType="x-www-form-url-encoded",
+                                    schema = @Schema(implementation = User.class))
+                        }
+                )
+            }
+    )
     @PutMapping(path="/user/{login}",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResponseEntity<Void> putNormal(@PathVariable String login,
-            @RequestParam (value="login") String newLogin
-            ,@RequestParam (value="password") String newPassword){
+    public ResponseEntity<Void> putNormal(@Parameter(description = "User actual login", required = true) @PathVariable String login,
+            @Parameter(description = "User new login", required = true) @RequestParam (value="login") String newLogin
+            ,@Parameter(description = "User new password", required = true) @RequestParam (value="password") String newPassword){
         System.out.println(u.get(login));
         if (!u.get(login).isEmpty()){
             User toChange = u.get(login).get();
@@ -133,8 +234,30 @@ public class UserRestController {
      * @param login
      * @return 
     */
+    @Operation(
+            summary = "Delete user",
+            responses = {
+                @ApiResponse(
+                        responseCode = "200",
+                        description = "ok",
+                        content = {
+                            @Content(mediaType="application/xml",
+                                    schema = @Schema(implementation = User.class)),
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = User.class))
+                        }
+                ),
+                @ApiResponse(
+                            responseCode = "404",
+                            description = "User not found",
+                            content = @Content(
+                                    schema = @Schema(implementation = Void.class)
+                            )
+                    )
+            }
+    )
     @DeleteMapping(path="/user/{login}")
-    public ResponseEntity<Void> deleteNormal(@PathVariable(value = "login") String login){
+    public ResponseEntity<Void> deleteNormal(@Parameter(description = "User login", required = true) @PathVariable(value = "login") String login){
         Optional<User> user = u.get(login);
         if (user.isPresent()){
             u.delete(user.get());
