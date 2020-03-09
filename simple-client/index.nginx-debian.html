@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SALUT</title>
+    </head>
+    <body>
+        <h1>Test Spring boot users server in CORS</h1>
+        <h3>Test result : OK</h3>
+        <p>See developer's tools for failure details</p>
+        <hr>
+        <h3>Parameters / results</h3>
+        <form>
+            <label for="login">Login</label>
+            <input type="text" id="login"/>
+            <br>
+            <label for="pwd">Password</label>
+            <input type="password" id="pwd"/>
+            <br>
+            <label for="origin">Origin</label>
+            <input type="text" id="origin"/>
+            <br>
+            <label for="token">Token</label>
+            <input type="text" id="token"/>
+            <br>
+        </form>
+        <hr>
+        <h3>Launch tests</h3>
+        <h5>User Controller</h5>
+        <ul>
+            <li>
+                Get user by login
+                <button>TEST</button>
+                (required field: login)
+            </li>
+        </ul>
+        <h5>Operation controller</h5>
+        <ul>
+            <li>
+                login POST
+                <button>TEST</button>
+                (required field: login, password)
+            </li>
+            <li>
+                logout DELETE
+                <button>TEST</button>
+                (required field: token)
+            </li>
+            <li>
+                Authenticate GET 
+                <button>TEST</button>
+                (required field: login, password, origin)
+            </li>
+        </ul>
+    </body>
+    <script type="text/javascript">
+        async function httpRequest(url, options, body) {
+            var myInit = {
+                method: options.method,
+                mode: 'cors',
+                cache: 'default'
+            };
+
+            if (options.headers instanceof Headers) {
+                myInit.headers = options.headers
+            } else {
+                myInit.headers = {}
+            }
+            myInit.headers['Access-Control-Allow-Origin'] = '*'
+            myInit.headers['Accept'] = 'application/json'
+
+            if (body !== undefined) {
+                myInit.body = body
+            }
+
+            console.log(myInit)
+
+            let tmp = await fetch(url, myInit)
+
+            return tmp;
+        }
+
+        console.log(window.origin)
+
+        httpRequest('http://192.168.75.38:8080/users', {
+            method: 'GET',
+        }).then((data) => {
+            data.json().then(json => {
+                console.log(json)
+            })
+        })
+    </script>
+</html>
