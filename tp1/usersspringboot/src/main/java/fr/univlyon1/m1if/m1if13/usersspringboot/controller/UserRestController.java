@@ -4,7 +4,6 @@ import fr.univlyon1.m1if.m1if13.usersspringboot.model.User;
 import fr.univlyon1.m1if.m1if13.usersspringboot.DAO.UserDao;
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.Set;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
