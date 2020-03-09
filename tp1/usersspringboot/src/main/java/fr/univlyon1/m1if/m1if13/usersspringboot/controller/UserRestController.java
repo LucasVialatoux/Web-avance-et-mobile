@@ -2,6 +2,10 @@ package fr.univlyon1.m1if.m1if13.usersspringboot.controller;
 
 import fr.univlyon1.m1if.m1if13.usersspringboot.model.User;
 import fr.univlyon1.m1if.m1if13.usersspringboot.DAO.UserDao;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import java.util.ArrayList;
 import java.util.Optional;
 import org.json.JSONException;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Parameter;
 
 /**
  *
@@ -35,9 +40,24 @@ public class UserRestController {
      * @param login
      * @return
     */
-    @GetMapping(value="/user/{login}"
+    @Operation(
+            summary = "Get one User by login",
+            responses = {
+                @ApiResponse(
+                        responseCode = "200",
+                        description = "ok",
+                        content = {
+                            @Content(mediaType="application/xml",
+                                    schema = @Schema(implementation = User.class)),
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = User.class))
+                        }
+                )
+            }
+    )
+    @GetMapping(path="/user/{login}"
     ,produces = {MediaType.APPLICATION_XML_VALUE,MediaType.APPLICATION_JSON_VALUE})
-    public User getNormal(@PathVariable String login){
+    public User getNormal(@Parameter(description="User login", required = true) @PathVariable String login){
         return u.get(login).get();
     }
     
@@ -46,7 +66,7 @@ public class UserRestController {
      * produces JSON | XML
      * @return
     */
-    @GetMapping(value="/users"
+    @GetMapping(path="/users"
     ,produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
     public ArrayList<String> getNormal(){
         return new ArrayList<>(u.getAll());
@@ -59,7 +79,7 @@ public class UserRestController {
      * @return 
      * @throws org.json.JSONException 
     */
-    @PostMapping(value="/users"
+    @PostMapping(path="/users"
             ,consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Void> post(@RequestBody String json) throws JSONException{
         JSONObject jsonString = new JSONObject(json);
@@ -74,7 +94,7 @@ public class UserRestController {
      * @param password
      * @return 
     */
-    @PostMapping(value="/users")
+    @PostMapping(path="/users")
     public ResponseEntity<Void> postNormal(@RequestParam(value = "login") String login,
             @RequestParam(value = "password") String password){
         User user = new User(login,password);
@@ -91,7 +111,7 @@ public class UserRestController {
      * @param newPassword
      * @return 
     */
-    @PutMapping(value="/user/{login}",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PutMapping(path="/user/{login}",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<Void> putNormal(@PathVariable String login,
             @RequestParam (value="login") String newLogin
             ,@RequestParam (value="password") String newPassword){
@@ -113,7 +133,7 @@ public class UserRestController {
      * @param login
      * @return 
     */
-    @DeleteMapping(value="/user/{login}")
+    @DeleteMapping(path="/user/{login}")
     public ResponseEntity<Void> deleteNormal(@PathVariable(value = "login") String login){
         Optional<User> user = u.get(login);
         if (user.isPresent()){
