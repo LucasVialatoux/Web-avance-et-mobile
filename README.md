@@ -9,6 +9,6 @@ Projet réalisé par Paul Horcholle & Lucas Vialatoux
 - OpenAPI + CORS + Client
 
 ## URLs
-- YAML : 
-- Swagger généré : 
+- YAML : https://forge.univ-lyon1.fr/p1600354/m1if13-2020/-/blob/master/users-api.yaml
+- Swagger généré : http://localhost:8080/swagger-ui/index.html
 - Client : http://192.168.75.38
