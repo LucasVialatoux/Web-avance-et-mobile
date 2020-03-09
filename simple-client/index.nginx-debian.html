@@ -11,10 +11,10 @@
         <h3>Parameters / results</h3>
         <form>
             <label for="login">Login</label>
-            <input type="text" id="login"/>
+            <input type="text" id="login" value="test"/>
             <br>
             <label for="pwd">Password</label>
-            <input type="password" id="pwd"/>
+            <input type="password" id="pwd" value="test"/>
             <br>
             <label for="origin">Origin</label>
             <input type="text" id="origin"/>
@@ -29,7 +29,7 @@
         <ul>
             <li>
                 Get user by login
-                <button>TEST</button>
+                <button id="btnget">TEST</button>
                 (required field: login)
             </li>
         </ul>
@@ -37,17 +37,17 @@
         <ul>
             <li>
                 login POST
-                <button>TEST</button>
+                <button id="btnpost">TEST</button>
                 (required field: login, password)
             </li>
             <li>
                 logout DELETE
-                <button>TEST</button>
+                <button id="btndelete">TEST</button>
                 (required field: token)
             </li>
             <li>
                 Authenticate GET 
-                <button>TEST</button>
+                <button id="btnget2">TEST</button>
                 (required field: login, password, origin)
             </li>
         </ul>
@@ -65,8 +65,10 @@
             } else {
                 myInit.headers = {}
             }
-            myInit.headers['Access-Control-Allow-Origin'] = '*'
-            myInit.headers['Accept'] = 'application/json'
+            myInit.headers['Origin'] = window.origin
+
+            if (options.method == 'GET' || options.method == 'get')
+                myInit.headers['Accept'] = 'application/json'
 
             if (body !== undefined) {
                 myInit.body = body
@@ -79,14 +81,65 @@
             return tmp;
         }
 
-        console.log(window.origin)
+        document.getElementById('btnget').onclick = () => {
+            let login = document.getElementById('login').value
 
-        httpRequest('http://192.168.75.38:8080/users', {
-            method: 'GET',
-        }).then((data) => {
-            data.json().then(json => {
-                console.log(json)
+            httpRequest(`http://192.168.75.38:8080/user/${login}`, {
+                method: 'GET',
+            }).then(response => {
+                console.log(response)
+                response.json().then(data => {
+                    console.log(data)
+                })
             })
-        })
+        }
+
+        document.getElementById('btnpost').onclick = () => {
+            let login = document.getElementById('login').value
+            let pwd = document.getElementById('pwd').value
+
+            console.log(pwd)
+            console.log(login)
+            httpRequest(`http://192.168.75.38:8080/login?login=${login}&password=${pwd}`, {
+                method: 'POST',
+            }).then(response => {
+                console.log(response.headers.get('Authentication') + ' <-- headers')
+                response.headers.forEach(elem => {
+                    console.log(elem)
+                })
+            })
+        }
+
+        document.getElementById('btndelete').onclick = () => {
+            let login = document.getElementById('login').value
+            let pwd = document.getElementById('pwd').value
+
+            console.log(pwd)
+            console.log(login)
+            httpRequest(`http://192.168.75.38:8080/login?login=${login}&password=${pwd}`, {
+                method: 'POST',
+            }).then(response => {
+                console.log(response.headers.get('Authentication') + ' <-- headers')
+                response.headers.forEach(elem => {
+                    console.log(elem)
+                })
+            })
+        }
+
+        document.getElementById('btnget2').onclick = () => {
+            let login = document.getElementById('login').value
+            let pwd = document.getElementById('pwd').value
+
+            console.log(pwd)
+            console.log(login)
+            httpRequest(`http://192.168.75.38:8080/login?login=${login}&password=${pwd}`, {
+                method: 'POST',
+            }).then(response => {
+                console.log(response.headers.get('Authentication') + ' <-- headers')
+                response.headers.forEach(elem => {
+                    console.log(elem)
+                })
+            })
+        }
     </script>
 </html>
