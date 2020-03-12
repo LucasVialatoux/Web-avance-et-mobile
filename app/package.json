@@ -14,5 +14,10 @@
     "ncov"
   ],
   "author": "paul & lucas",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.4.1",
+    "leaflet": "^1.6.0",
+    "purecss": "^1.0.1"
+  }
 }
