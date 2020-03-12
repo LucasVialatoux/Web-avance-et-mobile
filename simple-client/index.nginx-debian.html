@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8"/>
         <title>SALUT</title>
     </head>
     <body>
         <h1>Test Spring boot users server in CORS</h1>
-        <h3>Test result : OK</h3>
+        <h3 id="result"></h3>
         <p>See developer's tools for failure details</p>
         <hr>
         <h3>Parameters / results</h3>
@@ -60,7 +61,7 @@
                 cache: 'default'
             };
 
-            if (options.headers instanceof Headers) {
+            if (options.headers !== undefined) {
                 myInit.headers = options.headers
             } else {
                 myInit.headers = {}
@@ -81,16 +82,26 @@
             return tmp;
         }
 
+        function requestResult(bool) {
+            if (bool) {
+                document.getElementById('result').textContent = 'Request OK'
+            } else {
+                document.getElementById('result').textContent = 'Request KO'
+            }
+            return bool
+        }
+
         document.getElementById('btnget').onclick = () => {
             let login = document.getElementById('login').value
 
             httpRequest(`http://192.168.75.38:8080/user/${login}`, {
                 method: 'GET',
             }).then(response => {
-                console.log(response)
-                response.json().then(data => {
-                    console.log(data)
-                })
+                if (requestResult(response.ok)) {
+                    response.json().then(data => {
+                        console.log(data)
+                    })
+                }
             })
         }
 
@@ -98,47 +109,44 @@
             let login = document.getElementById('login').value
             let pwd = document.getElementById('pwd').value
 
-            console.log(pwd)
-            console.log(login)
             httpRequest(`http://192.168.75.38:8080/login?login=${login}&password=${pwd}`, {
                 method: 'POST',
             }).then(response => {
-                console.log(response.headers.get('Authentication') + ' <-- headers')
-                response.headers.forEach(elem => {
-                    console.log(elem)
-                })
+                if (requestResult(response.ok)) {
+                    document.getElementById('token').value =  response.headers.get('Authentication')
+                    sessionStorage.setItem('token', response.headers.get('Authentication'))
+                }
             })
         }
 
         document.getElementById('btndelete').onclick = () => {
-            let login = document.getElementById('login').value
-            let pwd = document.getElementById('pwd').value
+            let token = document.getElementById('token').value
 
-            console.log(pwd)
-            console.log(login)
-            httpRequest(`http://192.168.75.38:8080/login?login=${login}&password=${pwd}`, {
-                method: 'POST',
+            httpRequest(`http://192.168.75.38:8080/logout`, {
+                method: 'DELETE',
+                headers: {
+                    'Authentication': token
+                }
             }).then(response => {
-                console.log(response.headers.get('Authentication') + ' <-- headers')
-                response.headers.forEach(elem => {
-                    console.log(elem)
-                })
+                if (requestResult(response.ok)) {
+                    document.getElementById('token').value =  response.headers.get('Authentication')
+                    sessionStorage.removeItem('token')
+                }
             })
         }
 
         document.getElementById('btnget2').onclick = () => {
-            let login = document.getElementById('login').value
-            let pwd = document.getElementById('pwd').value
+            let token = document.getElementById('token').value
 
-            console.log(pwd)
-            console.log(login)
-            httpRequest(`http://192.168.75.38:8080/login?login=${login}&password=${pwd}`, {
-                method: 'POST',
+            httpRequest(`http://192.168.75.38:8080/authenticate`, {
+                method: 'GET',
+                headers: {
+                    'Authentication': token
+                }
             }).then(response => {
-                console.log(response.headers.get('Authentication') + ' <-- headers')
-                response.headers.forEach(elem => {
-                    console.log(elem)
-                })
+                if (requestResult(response.ok)) {
+                    console.log(response.headers.get('Authentication'))
+                }
             })
         }
     </script>

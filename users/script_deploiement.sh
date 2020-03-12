@@ -13,4 +13,4 @@ mvn package
 
 sshpass -p "${PASSWORD}" scp -r ${LINK} ${ROOT}
 
-sshpass -p "${PASSWORD}" ssh ${URL} "${SCRIPT}"
+#sshpass -p "${PASSWORD}" ssh ${URL} "${SCRIPT}"

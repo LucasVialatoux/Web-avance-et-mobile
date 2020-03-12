@@ -57,6 +57,8 @@ public class OperationController {
                     Algorithm algorithm = Algorithm.HMAC256("secret");
                     String token = JWT.create()
                         .withIssuer("auth0")
+                        .withClaim("login", login)
+                        .withClaim("origin", origin)
                         .sign(algorithm);
                     headers.add("Authentication", token);
                 } catch (JWTCreationException exception){
@@ -73,15 +75,28 @@ public class OperationController {
      * Réalise la déconnexion
      */
     @DeleteMapping("/logout")
-    public ResponseEntity<Void> logout(@RequestParam("login") String login) {
+    public ResponseEntity<Void> logout(@RequestHeader("Authentication") String token) {
         UserDao dao = ctx.getBean(UserDao.class);
-        
-        Optional<User> user = dao.get(login);
-        if (user.isPresent()) {
-            user.get().disconnect();
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        try {
+            Algorithm algorithm = Algorithm.HMAC256("secret");
+            JWTVerifier verifier = JWT.require(algorithm)
+                .withIssuer("auth0")
+                .build(); //Reusable verifier instance
+            DecodedJWT jwt = verifier.verify(token);
+
+            String claimlogin = jwt.getClaim("login").asString();
+
+            Optional<User> user = dao.get(claimlogin);
+            if (user.isPresent()) {
+                user.get().disconnect();
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    
+        } catch (JWTVerificationException exception){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
 
@@ -92,13 +107,18 @@ public class OperationController {
      * @return Une réponse vide avec un code de statut approprié (204, 400, 401).
      */
     @GetMapping("/authenticate")
-    public ResponseEntity<Void> authenticate(@RequestParam("token") String token, @RequestParam("origin") String origin) {
+    public ResponseEntity<Void> authenticate(@RequestHeader("Authentication") String token, @RequestHeader("Origin") String origin) {
         try {
             Algorithm algorithm = Algorithm.HMAC256("secret");
             JWTVerifier verifier = JWT.require(algorithm)
                 .withIssuer("auth0")
                 .build(); //Reusable verifier instance
             DecodedJWT jwt = verifier.verify(token);
+
+            String claimorigin = jwt.getClaim("origin").asString();
+            String claimlogin = jwt.getClaim("login").asString();
+
+            System.out.println(claimlogin + " " + claimorigin);
 
             HttpHeaders headers = new HttpHeaders();
             headers.set("Authentication", token);
