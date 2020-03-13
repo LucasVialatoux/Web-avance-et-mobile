@@ -8,6 +8,9 @@ Projet réalisé par Paul Horcholle & Lucas Vialatoux
 ## TP2
 - OpenAPI + CORS + Client
 
+## TP3
+- NPM + Webpack + Express
+
 ## URLs
 - YAML : https://forge.univ-lyon1.fr/p1600354/m1if13-2020/-/blob/master/users-api.yaml
 - Swagger généré : http://localhost:8080/swagger-ui/index.html
