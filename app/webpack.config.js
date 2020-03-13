@@ -2,9 +2,17 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-	entry: './public/src/js/map.js',
+	plugins: [
+        new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jquery"
+        })
+    ],
+	entry: {
+		home: ['./public/src/js/map.js','./public/src/js/form.js'],
+	},
 	output: {
-		filename: 'bundle.js',
+		filename: '[name].bundle.js',
 		path: path.resolve(__dirname, './public/dist'),
 	},
 	module: {

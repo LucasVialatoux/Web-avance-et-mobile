@@ -1,3 +1,5 @@
+import _ from 'lodash';
+import '../css/style.css';
 // initialisation de la map
 let mymap = L.map('map');
 updateMap();
@@ -16,10 +18,21 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=p
 L.marker([45.78207, 4.86559]).addTo(mymap).bindPopup('Entrée du bâtiment<br><strong>Nautibus</strong>.').openPopup();
 
 // Mise à jour de la map
-function updateMap() {
+export default function updateMap() {
 	// Affichage à la nouvelle position
 	mymap.setView([$('#lat').val(), $('#lon').val()], $('#zoom').val());
 
 	// La fonction de validation du formulaire renvoie false pour bloquer le rechargement de la page.
 	return false;
 }
+
+function component() {
+	const element = document.createElement('div');
+
+	// Lodash, now imported by this script
+	element.innerHTML = _.join(['Test', 'webpack css'], ' ');
+	element.classList.add('hello');
+
+	return element;
+}
+document.body.appendChild(component());

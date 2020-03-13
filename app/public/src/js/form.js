@@ -1,3 +1,4 @@
+import updateMap from './map.js';
 // MàJ de l'indicateur numérique du zoom
 function updateZoomValue() {
     $('#zoomValue').html($('#zoom').val());
