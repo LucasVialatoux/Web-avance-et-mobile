@@ -4,6 +4,8 @@
   "description": "ncov19ServerApp",
   "private": true,
   "scripts": {
+    "prestart": "npm install",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -15,8 +17,10 @@
   "author": "paul & lucas",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "connect": "^3.7.0",
+    "express": "^4.17.1",
+    "js-yaml": "^3.13.1",
+    "swagger-tools": "^0.10.1"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }

@@ -4,6 +4,7 @@ const port = 3000
 
 var admin = require('./routes/admin.js')
 var game = require('./routes/game.js')
+var jeux = require('./game-operation/index.js')
 
 //Error handler
 app.use(function (err, req, res, next) {
