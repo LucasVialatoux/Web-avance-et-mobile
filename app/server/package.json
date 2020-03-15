@@ -1,0 +1,22 @@
+{
+  "name": "serverApp",
+  "version": "1.0.0",
+  "description": "ncov19ServerApp",
+  "private": true,
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://forge.univ-lyon1.fr/p1600354/m1if13-2020"
+  },
+  "keywords": [
+    "ncov"
+  ],
+  "author": "paul & lucas",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+  }
+}

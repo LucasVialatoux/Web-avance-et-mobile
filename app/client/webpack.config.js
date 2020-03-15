@@ -9,11 +9,11 @@ module.exports = {
         })
     ],
 	entry: {
-		home: ['./public/src/js/map.js','./public/src/js/form.js'],
+		home: ['./src/js/map.js','./src/js/form.js'],
 	},
 	output: {
 		filename: '[name].bundle.js',
-		path: path.resolve(__dirname, './public/dist'),
+		path: path.resolve(__dirname, './src'),
 	},
 	module: {
 		rules: [
