@@ -2,6 +2,9 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+var admin = require('./routes/admin.js')
+var game = require('./routes/game.js')
+
 //Error handler
 app.use(function (err, req, res, next) {
   console.error(err.stack)
@@ -15,3 +18,6 @@ app.use('/static', express.static('public'))
 
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
+app.use('/admin', admin)
+app.use('/game', game)
