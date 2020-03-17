@@ -1,5 +1,6 @@
 const express = require('express')
-//const app = express()
+const ejs = require('ejs')
+const app = express()
 const port = 3000
 
 var admin = require('./routes/admin.js')
@@ -10,7 +11,7 @@ var fs = require('fs'),
     path = require('path'),
     http = require('http');
 
-var app = require('connect')();
+//var app = require('connect')();
 var swaggerTools = require('./node_modules/swagger-tools');
 var jsyaml = require('js-yaml');
 
@@ -39,6 +40,10 @@ app.use('/static', express.static('public'))
 
 //app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
+app.engine('html', ejs.renderFile)
+app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, '/template-ejs'))
+
 app.use('/admin', admin)
 app.use('/game', game)
 
@@ -62,9 +67,9 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
   // Start the server
   http.createServer(app).listen(port, function () {
   	console.log('##### APP IS RUNNING #####')
-    console.log('Your server is listening on port %d (http://localhost:%d)', port, port);
-    console.log('Your game is available on (http://localhost:%d/game)', port);
-    console.log('Your admin panel is available on (http://localhost:%d/admin)', port);
+    console.log('Your server is listening on port %d http://localhost:%d', port, port);
+    console.log('Your game is available on http://localhost:%d/game', port);
+    console.log('Your admin panel is available on http://localhost:%d/admin', port);
     console.log('Swagger-ui is available on http://localhost:%d/docs', port);
   });
 
