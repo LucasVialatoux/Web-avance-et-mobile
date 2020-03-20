@@ -27,7 +27,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 /**
  *
  * UserRestController
- Gère les requêtes suivantes : GET ; PUT ; POST ; DELETE;
+ Gï¿½re les requï¿½tes suivantes : GET ; PUT ; POST ; DELETE;
  * 
  */
 @RestController
@@ -181,6 +181,54 @@ public class UserRestController {
         u.save(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    /**
+    * PUT request
+     * consumes JSON | XML
+     * @param json
+     * @return 
+     * @throws org.json.JSONException 
+    */
+    @Operation(
+            summary = "Create or update user",
+            responses = {
+                @ApiResponse(
+                        responseCode = "201",
+                        description = "created",
+                        content = {
+                            @Content(mediaType="application/xml",
+                                    schema = @Schema(implementation = User.class)),
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = User.class))
+                        }
+                ),
+                @ApiResponse(
+                            responseCode = "400",
+                            description = "Bad request",
+                            content = @Content(
+                                    schema = @Schema(implementation = Void.class)
+                            )
+                    )
+            }
+    )
+    @PutMapping(path="/user/{login}"
+            ,consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
+    public ResponseEntity<Void> put(@Parameter(description = "User actual login", required = true) @PathVariable String login, 
+                @RequestBody String json) throws JSONException{
+        JSONObject jsonString = new JSONObject(json);
+        String newLogin = jsonString.getString("login");
+        String newPassword = jsonString.getString("password");
+        if (u.get(login).isPresent()) {
+            User toChange = u.get(login).get();
+            String[] params={newLogin,newPassword};
+            u.update(toChange,params);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            User user = new User(newLogin,newPassword);
+            u.save(user);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
+    }
     
     /**
     * PUT request
@@ -216,8 +264,7 @@ public class UserRestController {
     public ResponseEntity<Void> putNormal(@Parameter(description = "User actual login", required = true) @PathVariable String login,
             @Parameter(description = "User new login", required = true) @RequestParam (value="login") String newLogin
             ,@Parameter(description = "User new password", required = true) @RequestParam (value="password") String newPassword){
-        System.out.println(u.get(login));
-        if (!u.get(login).isEmpty()){
+        if (u.get(login).isPresent()){
             User toChange = u.get(login).get();
             String[] params={newLogin,newPassword};
             u.update(toChange,params);

@@ -19,7 +19,7 @@ public class UsersspringbootApplication {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
-				.allowedMethods("GET", "POST", "DELETE")
+				.allowedMethods("GET", "POST", "PUT", "DELETE")
 				.allowedOrigins("http://localhost", "http://192.168.75.38")
 				.allowedHeaders("Authentication", "Origin")
 				.exposedHeaders("Authentication");
