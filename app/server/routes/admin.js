@@ -3,10 +3,24 @@ var router = express.Router()
 const axios = require('axios')
 
 // Route page d'administration
-router.get('/', async (req, res) => {
-  let response = await axios.get('http://localhost:8080/users')
+router.get('/', (req, res) => {
+    axios.get('http://localhost/auth/users')
+    .then(response =>  {
+        res.render('admin', {users: response.data})
+    })
+    .catch(error => {
+        console.log(error)
+    })
+})
 
-  res.render('admin', {users: response.data})
+router.get('/:id', (req, res) => {
+    axios.get(`http://localhost/auth/user/${req.params.id}`)
+    .then(response =>  {
+        res.render('user', {user: response.data})
+    })
+    .catch(error => {
+        console.log(error)
+    })
 })
 
 module.exports = router

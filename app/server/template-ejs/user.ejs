@@ -8,23 +8,13 @@
             <%-include('partials/header')%>
         </header>
         <main>
-            <div id="listUser">
-                <p>Liste des Users</p>
-                <ul>
-                    <% if (users) {
-                        for (user of users) { %>
-                            <li><a href="http://localhost/admin/<%- user %>"><%- user %></a></li>
-                        <% }
-                    } %>
-                </ul>
-            </div>
-            <div id="addUser">
-                <label for="login">Login</label>
-                <input type="text" id="login">
-                <label for="password">Password</label>
-                <input type="password" id="password">
-                <button id="buttonAddUser">Ajouter un User</button>
-            </div>
+            <% if (user) { %>
+                <p><input type="text" id="login" value="<%- user.login %>"/></p>
+                <p><input type="text" id="password" value="<%- user.password %>"/></p>
+                <p><%- user.connected %></p>
+                <button id="buttonUpdateUser">Update User</button>
+                <button id="buttonDeleteUser">Delete User</button>
+            <% } %>
         </main>
         <footer>
             <%-include('partials/footer')%>
@@ -57,20 +47,34 @@
                 return tmp;
             }
             
-            let button = document.getElementById('buttonAddUser')
+            let button = document.getElementById('buttonUpdateUser')
 
             button.onclick = () => {
                 let login = document.getElementById('login').value
                 let password = document.getElementById('password').value
 
-                httpRequest(`http://localhost/auth/users`, {
-                    method: 'POST',
+                httpRequest(`http://localhost/auth/user/<%- user.login %>`, {
+                    method: 'PUT',
                 }, {
                     login: login,
                     password: password
                 }).then(response => {
                     if (response.ok) {
                         location.reload()
+                    }
+                }).catch(error => {
+                    console.log(error)
+                })
+            }
+
+            let buttond = document.getElementById('buttonDeleteUser')
+
+            buttond.onclick = () => {
+                httpRequest(`http://localhost/auth/user/<%- user.login %>`, {
+                    method: 'DELETE',
+                }).then(response => {
+                    if (response.ok) {
+                        window.location.replace("http://localhost/admin");
                     }
                 }).catch(error => {
                     console.log(error)
