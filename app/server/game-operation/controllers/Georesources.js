@@ -14,8 +14,8 @@ module.exports.resourcesGET = function resourcesGET (req, res, next) {
 };
 
 module.exports.resourcesResourceIdImagePUT = function resourcesResourceIdImagePUT (req, res, next) {
-  var resourceId = req.swagger.params['resourceId'].value;
-  var url = req.swagger.params['url'].value;
+  var resourceId = req.params.resourceId;
+  var url = req.query.url;
   Georesources.resourcesResourceIdImagePUT(resourceId,url)
     .then(function (response) {
       utils.writeJson(res, response);
@@ -26,8 +26,8 @@ module.exports.resourcesResourceIdImagePUT = function resourcesResourceIdImagePU
 };
 
 module.exports.resourcesResourceIdPositionPUT = function resourcesResourceIdPositionPUT (req, res, next) {
-  var resourceId = req.swagger.params['resourceId'].value;
-  var position = req.swagger.params['position'].value;
+  var resourceId = req.params.resourceId;
+  var position = req.query.position;
   Georesources.resourcesResourceIdPositionPUT(resourceId,position)
     .then(function (response) {
       utils.writeJson(res, response);

@@ -9,17 +9,17 @@ router.get('/', function (req, res) {
 
 // GET method route : /resources
 router.get('/resources', function (req, res) {
-  geo.resourcesGET()
+  geo.resourcesGET(req, res)
 })
 
 // PUT method route : /resources/{resourceid}/position
-router.put('/resources/:id/position', function (req, res) {
-  geo.resourcesResourceIdImagePUT()
+router.put('/resources/:resourceId/position', function (req, res) {
+  geo.resourcesResourceIdPositionPUT(req, res)
 })
 
 // PUT method route : /resources/{resourceid}/image
-router.put('/resources/:id/image', function (req, res) {
-  geo.resourcesResourceIdPositionPUT()
+router.put('/resources/:resourceId/image', function (req, res) {
+  geo.resourcesResourceIdImagePUT(req, res)
 })
 
 module.exports = router
