@@ -9,21 +9,36 @@ module.exports = {
         })
     ],
 	entry: {
-		home: ['./src/js/map.js','./src/js/form.js'],
+		home: ['./src/index.html', './src/js/map.js', './src/js/form.js'],
 	},
 	output: {
-		filename: '[name].bundle.js',
-		path: path.resolve(__dirname, './src'),
+		filename: 'bundle.js',
+		path: path.resolve(__dirname, './public'),
 	},
 	module: {
 		rules: [
 			{
-		     	test: /\.css$/,
-		     	use: [
-		       		'style-loader',
-		       		'css-loader',
-		     	],
-		   	},
+				test: /\.css$/i,
+				use: ['style-loader', 'css-loader'],
+			},
+			{
+				test: /\.html$/,
+				use: [{
+					loader: 'file-loader', 
+					options: {
+						name: '[name].[ext]'
+					}
+				}]
+			},
+			{
+				test: /\.(png|svg|jpg|gif)$/,
+				use: [{
+					loader: 'file-loader',
+					options: {
+						name: 'assets/images/[name].[ext]'
+					}
+				}]
+			},
 		],
 	}
 };

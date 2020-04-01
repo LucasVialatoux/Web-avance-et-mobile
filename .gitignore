@@ -1,6 +1,6 @@
 # IDE generated files #
 ######################
-tp1/usersspringboot/target/*
+users/target/*
 
 # Compiled source #
 ###################
@@ -157,3 +157,6 @@ dist
 .yarn/unplugged
 .yarn/build-state.yml
 .pnp.*
+
+app/client/public
+app/server/config

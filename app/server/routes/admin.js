@@ -1,10 +1,11 @@
+var conf = require('../config/config')
 var express = require('express')
 var router = express.Router()
 const axios = require('axios')
 
 // Route page d'administration
 router.get('/', (req, res) => {
-    axios.get('http://localhost/auth/users')
+    axios.get(`${conf.origin}/auth/users`)
     .then(response =>  {
         res.render('admin', {users: response.data})
     })
@@ -14,7 +15,7 @@ router.get('/', (req, res) => {
 })
 
 router.get('/:id', (req, res) => {
-    axios.get(`http://localhost/auth/user/${req.params.id}`)
+    axios.get(`${conf.origin}/auth/user/${req.params.id}`)
     .then(response =>  {
         res.render('user', {user: response.data})
     })

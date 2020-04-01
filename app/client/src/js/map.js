@@ -1,5 +1,9 @@
 import _ from 'lodash';
+import 'leaflet';
+import 'purecss';
+import '../../node_modules/leaflet/dist/leaflet.css';
 import '../css/style.css';
+
 // initialisation de la map
 let mymap = L.map('map');
 updateMap();
