@@ -21,7 +21,8 @@
     "leaflet": "^1.6.0",
     "lodash": "^4.17.15",
     "purecss": "^1.0.1",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vuex": "^3.4.0"
   },
   "devDependencies": {
     "css-loader": "^3.4.2",
