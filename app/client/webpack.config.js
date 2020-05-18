@@ -43,6 +43,11 @@ module.exports = {
 				}]
 			},
 		],
-	}
+	},
+  resolve: {
+    alias: {
+      './vue.js': './node_modules/vue/dist/vue.esm.browser.js'
+    }
+  }
 };
 
