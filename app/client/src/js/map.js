@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import $ from 'jquery';
 import 'leaflet';
 import 'purecss';
 import '../../node_modules/leaflet/dist/leaflet.css';

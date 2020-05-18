@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = {
 	mode: 'development',
@@ -12,7 +13,7 @@ module.exports = {
         })
     ],
 	entry: {
-		home: ['./src/index.html', './src/js/map.js', './src/js/form.js', './src/js/index.js'],
+		home: ['./src/index.html', './src/js/index.js', './src/js/map.js', './src/js/form.js'],
 	},
 	output: {
 		filename: 'bundle.js',
@@ -42,7 +43,15 @@ module.exports = {
 					}
 				}]
 			},
+			{
+				test: /\.vue$/,
+				loader: 'vue-loader'
+			}
 		],
-	}
+	},
+	plugins: [
+		// make sure to include the plugin!
+		new VueLoaderPlugin()
+	]
 };
 
