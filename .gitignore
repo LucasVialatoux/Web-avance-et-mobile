@@ -160,3 +160,5 @@ dist
 
 app/client/public
 app/server/config
+
+tp1/*

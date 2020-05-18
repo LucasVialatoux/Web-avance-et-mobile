@@ -2,6 +2,9 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
+	mode: 'development',
+	devtool: 'source-map',
+	watch: true,
 	plugins: [
         new webpack.ProvidePlugin({
             $: "jquery",
@@ -9,7 +12,7 @@ module.exports = {
         })
     ],
 	entry: {
-		home: ['./src/index.html', './src/js/map.js', './src/js/form.js'],
+		home: ['./src/index.html', './src/js/map.js', './src/js/form.js', './src/js/index.js'],
 	},
 	output: {
 		filename: 'bundle.js',
