@@ -25,12 +25,17 @@ const getters = {
 
 //VueX Mutations
 const mutations = {
-
+	UPDATE_LABEL: (state, label) => {
+		state.labels[0].value = label[0].value
+		state.labels[1].value = label[1].value
+    }  
 };
 
 //VueX Actions
 const actions = {
-
+	loadLabels: (context, label) => {
+            context.commit('UPDATE_LABEL', label);
+        }
 };
 
 //VueX Store
@@ -40,3 +45,4 @@ export default new Vuex.Store({
   actions,  
   getters  
 });
+

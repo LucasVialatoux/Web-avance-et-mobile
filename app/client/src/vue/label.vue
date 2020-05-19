@@ -8,6 +8,12 @@
 <script>
     export default {
         name: 'myLabel',
-        props: ['label']
+        props: ['label'],
+	    watch: {
+	        update() {
+	            updateMap();
+	            console.log('just changed');
+	        }
+	    }
     }
 </script>
