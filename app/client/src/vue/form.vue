@@ -9,7 +9,7 @@
 
 <script>
     import {default as myLabel} from './label.vue';
-
+    import $ from 'jquery';
     export default {
         name: "Form",
         components: {
@@ -29,6 +29,12 @@
                     labels.push({value: val });
                 }
                 this.$store.dispatch("loadLabels", labels);
+
+                //Récupérer instance de la map
+                var map = document.getElementById('map')._leaflet_map;
+                //MàJ de la map
+                map.setView([$('#lat').val(), $('#lon').val()], $('#zoom').val());
+
             }
         },
         computed: {

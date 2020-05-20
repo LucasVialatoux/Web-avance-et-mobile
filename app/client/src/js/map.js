@@ -5,6 +5,12 @@ import 'purecss';
 import '../../node_modules/leaflet/dist/leaflet.css';
 import '../css/style.css';
 
+L.Map.addInitHook(function () {
+  // Store a reference of the Leaflet map object on the map container,
+  // so that it could be retrieved from DOM selection.
+  // https://leafletjs.com/reference-1.3.4.html#map-getcontainer
+  this.getContainer()._leaflet_map = this;
+});
 // initialisation de la map
 let mymap = L.map('map');
 updateMap();
@@ -21,6 +27,8 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=p
 
 // Ajout d'un marker
 L.marker([45.78207, 4.86559]).addTo(mymap).bindPopup('Entrée du bâtiment<br><strong>Nautibus</strong>.').openPopup();
+
+
 
 // Mise à jour de la map
 export default function updateMap() {

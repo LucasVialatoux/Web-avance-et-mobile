@@ -1,5 +1,6 @@
 import Vue from 'vue/dist/vue.js';
 import Vuex from 'vuex';
+import $ from 'jquery';
 
 Vue.use(Vuex);
 
@@ -20,14 +21,19 @@ const getters = {
   },
   getTitle(state){
   	return state.title;
+  },
+  getLabelById: (state) => (id) => {
+    return state.labels.find(label => label.id === id);
   }
 };
 
 //VueX Mutations
 const mutations = {
 	UPDATE_LABEL: (state, label) => {
-		state.labels[0].value = label[0].value
-		state.labels[1].value = label[1].value
+		state.labels[0].value = label[0].value;
+		state.labels[1].value = label[1].value;
+		$('#lat').val(label[0].value);
+		$('#lon').val(label[1].value);
     }  
 };
 
