@@ -1,27 +1,13 @@
 import Vue from 'vue/dist/vue.js';
-import {default as Form} from '../vue/form.vue';
+import {default as MapView} from '../vue/mapview.vue';
 
 import { mapState } from 'vuex';
-import store from '../store/store';
+import store from './store';
 
 Vue.config.productionTip = false
 
-var h1 = new Vue({ 
-    el: '#h1',
-    data: {
-        title: 'MifMapApp'
-    }
-});
-
-var form = new Vue({
-    el: '#form',
+new Vue({
+    el: '#app',
     store,
-    render: h => h(Form)
-});
-
-var map = new Vue({ 
-    el: '#titleMap',
-    data: {
-        title: 'Carte'
-    }
-});
+    render: h => h(MapView)
+})

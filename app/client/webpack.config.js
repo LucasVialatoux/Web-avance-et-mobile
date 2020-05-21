@@ -13,7 +13,7 @@ module.exports = {
         })
     ],
 	entry: {
-		home: ['./src/index.html', './src/js/index.js', './src/js/map.js', './src/js/form.js'],
+		home: ['./src/index.html', './src/js/index.js', './src/js/map.js'],
 	},
 	output: {
 		filename: 'bundle.js',
