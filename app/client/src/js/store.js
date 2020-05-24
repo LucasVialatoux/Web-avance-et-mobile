@@ -30,14 +30,14 @@ const getters = {
 
 //VueX Mutations
 const mutations = {
-    changeLabel: (state, payload) => {
+    /*changeLabel: (state, payload) => {
         const {id, value} = payload
         const label = state.form.labels.find(label => label.id === id)
         label.value = value
 
         var map = document.getElementById('map')._leaflet_map
         map.setView([state.form.labels[0].value, state.form.labels[1].value], state.form.labels[2].value);
-    }
+    }*/
 };
 
 //VueX Actions
