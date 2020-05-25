@@ -11,9 +11,10 @@ L.Map.addInitHook(function () {
   // https://leafletjs.com/reference-1.3.4.html#map-getcontainer
   this.getContainer()._leaflet_map = this;
 });
+let mymap;
 // initialisation de la map
 function initMap(){
-	let mymap = L.map('map');
+	mymap = L.map('map');
 	//updateMap();
 
 	// Création d'un "tile layer" (permet l'affichage sur la carte)
