@@ -44,7 +44,7 @@ export default function updateMap() {
 	return false;
 }
 
-function component() {
+/*function component() {
 	const element = document.createElement('div');
 
 	// Lodash, now imported by this script
@@ -53,4 +53,4 @@ function component() {
 
 	return element;
 }
-document.body.appendChild(component());
+document.body.appendChild(component());*/
