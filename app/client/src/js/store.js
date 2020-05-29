@@ -5,6 +5,10 @@ Vue.use(Vuex);
 
 //VueX State
 const state = {
+    auth: {
+        token: undefined,
+        connected: false
+    },
     form: {
         title : 'Position',
         labels: [
@@ -41,6 +45,16 @@ const mutations = {
 
         var map = document.getElementById('map')._leaflet_map
         map.setView([state.form.labels[0].value, state.form.labels[1].value], state.form.labels[2].value);
+    },
+    connected: (state, payload) => {
+        const {token, user} = payload
+
+        state.auth.token = token
+        state.auth.connected = true
+    },
+    disconnected: (state, payload) => {
+        state.auth.token = undefined
+        state.auth.connected = false
     },
     updateLat: (state, lat) => {
         state.position.lat = lat

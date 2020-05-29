@@ -1,27 +1,10 @@
-import Vue from 'vue/dist/vue.js';
-import MapView from '../vue/mapview.vue';
-import Login from '../vue/login.vue';
-import App from '../vue/app.vue';
-import VueRouter from 'vue-router';
+import Vue from 'vue/dist/vue.js'
+import App from '../vue/app.vue'
 
-import { mapState } from 'vuex';
-import store from './store';
+import store from './store'
+import router from './router'
 
-Vue.config.productionTip = false;
-
-Vue.use(VueRouter);
-
-const Mymap = { render: h => h(MapView) };
-const Home = { render: h => h(Login)};
-
-const routes = [
-  { path: '', component: Home },
-  { path: '/map', component: Mymap },
-]
-
-const router = new VueRouter({
-  routes
-})
+Vue.config.productionTip = false
 
 new Vue({
     el: '#app',
