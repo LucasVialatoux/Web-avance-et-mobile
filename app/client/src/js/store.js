@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 //VueX State
 const state = {
+    title: 'MifMapApp',
     auth: {
         token: undefined,
         connected: false
@@ -27,9 +28,6 @@ const state = {
 const getters = {
     getLabels(state){
         return state.form.labels;
-    },
-    getTitle(state){
-        return state.form.title;
     },
     getLabelById: (state) => (id) => {
         return state.form.labels.find(label => label.id === id);

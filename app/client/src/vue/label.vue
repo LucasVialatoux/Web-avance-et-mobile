@@ -1,8 +1,8 @@
 <template>
-    <div>
-        <v-label :for="label.id">{{label.title}}</v-label>
-        <v-input :type="label.type" :id="label.id" :name="label.name" v-model="label.value" :min="label.min" :max="label.max" @input="update()"/>
-    </div>
+    <v-row>
+        <v-text-field v-if="label.type=='text'" :label="label.title" v-model="label.value" @input="update()"/>
+        <v-slider v-if="label.type=='range'" :label="label.title" :min="label.min" :max="label.max" v-model="label.value" @input="update()"></v-slider>
+    </v-row>
 </template>
 
 <script>

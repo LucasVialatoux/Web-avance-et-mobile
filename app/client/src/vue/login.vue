@@ -3,7 +3,7 @@
     <v-form>
             <v-row>
                 <v-text-field label="Login" v-model="login"></v-text-field>
-                <v-text-field label="Mot de passe" v-model="mdp"></v-text-field>
+                <v-text-field type="password" label="Mot de passe" v-model="mdp"></v-text-field>
             </v-row>
             <v-row>
                 <v-btn @click="loginPost()">Login</v-btn>
