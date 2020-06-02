@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <v-container>
         <myHeader/>
         <myForm/>
         <myMap/>
-    </div>
+    </v-container>
 </template>
 
 <script>

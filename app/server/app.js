@@ -1,7 +1,7 @@
 const express = require('express')
 const ejs = require('ejs')
 const app = express()
-const port = 3000
+const port = 3376
 
 var admin = require('./routes/admin.js')
 var game = require('./routes/game.js')

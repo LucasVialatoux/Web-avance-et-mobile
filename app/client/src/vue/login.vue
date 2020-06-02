@@ -1,15 +1,15 @@
 <template>
-<div>
-    <div>
-        <label for="login">Login</label>
-        <input type="text" id="login" name="login" v-model="login"/>
-    </div>
-    <div>
-        <label for="mdp">Mdp</label>
-        <input type="password" id="mdp" name="mdp" v-model="mdp"/>
-    </div>
-    <button @click="loginPost()">Login</button>
-</div>
+<v-container>
+    <v-form>
+            <v-row>
+                <v-text-field label="Login" v-model="login"></v-text-field>
+                <v-text-field label="Mot de passe" v-model="mdp"></v-text-field>
+            </v-row>
+            <v-row>
+                <v-btn @click="loginPost()">Login</v-btn>
+            </v-row>
+    </v-form>
+</v-container>
 </template>
 
 <script>
@@ -43,12 +43,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-    div {
-        width: 100%;
-    }
-    form {
-        margin: 3px auto;
-    }
-</style>
