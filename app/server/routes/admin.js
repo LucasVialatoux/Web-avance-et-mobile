@@ -1,4 +1,4 @@
-var conf = require('../confs/local/config')
+var conf = require('../config/config')
 var express = require('express')
 var router = express.Router()
 const axios = require('axios')
