@@ -7,7 +7,7 @@ const axios = require('axios')
 router.get('/', (req, res) => {
     axios.get(`${conf.origin}/auth/users`)
     .then(response =>  {
-        res.render('admin', {users: response.data})
+        res.render('admin', {users: response.data, origin: conf.origin})
     })
     .catch(error => {
         console.log(error)
@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
     axios.get(`${conf.origin}/auth/user/${req.params.id}`)
     .then(response =>  {
-        res.render('user', {user: response.data})
+        res.render('user', {user: response.data, origin: conf.origin})
     })
     .catch(error => {
         console.log(error)

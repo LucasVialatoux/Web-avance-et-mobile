@@ -53,7 +53,7 @@
                 let login = document.getElementById('login').value
                 let password = document.getElementById('password').value
 
-                httpRequest(`http://localhost/auth/user/<%- user.login %>`, {
+                httpRequest(`${window.origin}/auth/user/<%- user.login %>`, {
                     method: 'PUT',
                 }, {
                     login: login,
@@ -70,11 +70,11 @@
             let buttond = document.getElementById('buttonDeleteUser')
 
             buttond.onclick = () => {
-                httpRequest(`http://localhost/auth/user/<%- user.login %>`, {
+                httpRequest(`${window.origin}/auth/user/<%- user.login %>`, {
                     method: 'DELETE',
                 }).then(response => {
                     if (response.ok) {
-                        window.location.replace("http://localhost/admin");
+                        window.location.replace(`${window.origin}/admin`);
                     }
                 }).catch(error => {
                     console.log(error)

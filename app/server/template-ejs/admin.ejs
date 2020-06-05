@@ -13,7 +13,7 @@
                 <ul>
                     <% if (users) {
                         for (user of users) { %>
-                            <li><a href="http://localhost/admin/<%- user %>"><%- user %></a></li>
+                            <li><a href="<%- origin %>/admin/<%- user %>"><%- user %></a></li>
                         <% }
                     } %>
                 </ul>
@@ -63,7 +63,7 @@
                 let login = document.getElementById('login').value
                 let password = document.getElementById('password').value
 
-                httpRequest(`http://localhost/auth/users`, {
+                httpRequest(`${window.origin}/auth/users`, {
                     method: 'POST',
                 }, {
                     login: login,
