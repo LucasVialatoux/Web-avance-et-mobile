@@ -27,4 +27,6 @@ Projet réalisé par Paul Horcholle & Lucas Vialatoux
 ## URLs
 - YAML : https://forge.univ-lyon1.fr/p1600354/m1if13-2020/-/blob/master/users-api.yaml
 - Swagger généré : http://localhost:8080/swagger-ui/index.html
-- Client : http://192.168.75.38
+- Client : http://192.168.75.38/public
+- Serveur Users : http://192.168.75.38/users
+- Serveur Node Admin : http://192.168.75.38/admin
