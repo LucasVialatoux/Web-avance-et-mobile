@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+const axios = require('axios')
+
 Vue.use(Vuex);
 
 //VueX State
@@ -21,6 +23,9 @@ const state = {
     position: {
         lat : 45.78,
         lon : 4.865
+    },
+    game: {
+
     }
 };
 
@@ -59,6 +64,20 @@ const mutations = {
     },
     updateLon: (state, lon) => {
         state.position.lon = lon
+    },
+    updateGameData: (state, payload) => {
+        axios.get(`${window.origin}/game/resources`, {
+            headers: {
+                'Authentication': state.auth.token
+            }
+        })
+        .then(response => {
+            console.log(response.data)
+            state.game = response.data
+        })
+        .catch(error => {
+            console.log(error)
+        })
     }
 };
 

@@ -1,7 +1,7 @@
 <template>
-    <v-header>
+    <header>
 		<h1 id="h1">{{ this.$store.state.title }}</h1>
-	</v-header>
+	</header>
 </template>
 
 <script>

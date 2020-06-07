@@ -1,25 +1,26 @@
-var express = require('express')
-var router = express.Router()
-var geo = require('../game-operation/controllers/Georesources.js');
+let express = require('express')
+let router = express.Router()
+let geo = require('../game-operation/controllers/Georesources.js');
+const authenticate = require('../middleware')
 
 // Route page du jeu
 router.get('/', function (req, res) {
-  res.send('PAGE JEUX')
+    res.send('PAGE JEUX')
 })
 
 // GET method route : /resources
-router.get('/resources', function (req, res) {
-  geo.resourcesGET(req, res)
+router.get('/resources', authenticate.authenticate, function (req, res) {
+    geo.resourcesGET(req, res)
 })
 
 // PUT method route : /resources/{resourceid}/position
-router.put('/resources/:resourceId/position', function (req, res) {
-  geo.resourcesResourceIdPositionPUT(req, res)
+router.put('/resources/:resourceId/position', authenticate.authenticate, function (req, res) {
+    geo.resourcesResourceIdPositionPUT(req, res)
 })
 
 // PUT method route : /resources/{resourceid}/image
-router.put('/resources/:resourceId/image', function (req, res) {
-  geo.resourcesResourceIdImagePUT(req, res)
+router.put('/resources/:resourceId/image', authenticate.authenticate, function (req, res) {
+    geo.resourcesResourceIdImagePUT(req, res)
 })
 
 module.exports = router

@@ -12,13 +12,14 @@ import {default as myForm} from './form.vue';
 import {default as myMap} from './map.vue';
 import initMap from '../js/map.js';
 import updateMap from '../js/map.js';
-import $ from 'jquery';
 import L from 'leaflet';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 
 let idSuivi;
 let mymap;
+
+const axios = require('axios')
 
 export default {
     name: 'MapView',
@@ -30,12 +31,13 @@ export default {
     methods: {
         updatePos: function(position) {
             //MàJ store
-            this.$store.commit("updateLat", position.coords.latitude);
-            this.$store.commit("updateLon", position.coords.longitude);
-            let coords = [position.coords.latitude, position.coords.longitude];
-            console.log(coords);
+            this.$store.commit("updateLat", position.coords.latitude)
+            this.$store.commit("updateLon", position.coords.latitude)
+            let coords = [position.coords.latitude, position.coords.longitude]
+            console.log(L.latLng(position.coords.latitude, position.coords.latitude).toString())
             //Ajout position
-            L.circle(coords, {radius: 5, color: "red", fillColor: "#fff", fillOpacity: 0.0}).addTo(mymap);
+            L.circle(coords, {radius: 5, color: "red", fillColor: "#fff", fillOpacity: 0.0}).addTo(mymap)
+            this.$store.commit("updateGameData")
         }
     },
     mounted(){
@@ -60,7 +62,7 @@ export default {
         }).addTo(mymap);
         L.marker([45.78207, 4.86559]).addTo(mymap).bindPopup('Entrée du bâtiment<br><strong>Nautibus</strong>.').openPopup();
 
-        mymap.setView([$('#lat').val(), $('#lon').val()], $('#zoom').val());
+        mymap.setView([this.$store.state.form.labels[0].value, this.$store.state.form.labels[1].value], this.$store.state.form.labels[2].value);
     },
     destroyed() {
         navigator.geolocation.clearWatch(idSuivi);

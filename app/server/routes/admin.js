@@ -14,7 +14,17 @@ router.get('/', (req, res) => {
     })
 })
 
-router.get('/:id', (req, res) => {
+router.get('/options', (req, res) => {
+    axios.get(`${conf.origin}/game/resources`)
+    .then(response =>  {
+        res.render('options', {game: response.data, origin: conf.origin})
+    })
+    .catch(error => {
+        console.log(error)
+    })
+})
+
+router.get('/user/:id', (req, res) => {
     axios.get(`${conf.origin}/auth/user/${req.params.id}`)
     .then(response =>  {
         res.render('user', {user: response.data, origin: conf.origin})

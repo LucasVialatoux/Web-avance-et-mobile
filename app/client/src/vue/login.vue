@@ -27,7 +27,6 @@ export default {
         loginPost() {
             axios.post(`${window.origin}/auth/login?login=${this.login}&password=${this.mdp}`)
             .then(response => {
-                console.log(response)
                 if (response.status == 204) {
                     this.$store.commit('connected', {
                         token: response.headers.authentication,

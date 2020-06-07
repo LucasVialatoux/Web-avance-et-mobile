@@ -4,7 +4,7 @@
   "description": "ncov19ServerApp",
   "private": true,
   "scripts": {
-    "prestart": "npm install",
+    "prestart2": "npm install",
     "start": "node app.js"
   },
   "repository": {
