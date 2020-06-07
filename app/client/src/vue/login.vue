@@ -1,15 +1,25 @@
 <template>
-<v-container>
-    <v-form>
-            <v-row>
-                <v-text-field label="Login" v-model="login"></v-text-field>
-                <v-text-field type="password" label="Mot de passe" v-model="mdp"></v-text-field>
+<v-row justify="center">
+    <v-col sm="12" md="8" lg="4">
+        <v-card>
+            <v-row justify="center">
+                <v-col sm="12" md="8" lg="4">
+                    <v-form>
+                            <v-row justify="center">
+                                <v-text-field label="Login" v-model="login"></v-text-field>
+                            </v-row>
+                            <v-row justify="center">
+                                <v-text-field type="password" label="Mot de passe" v-model="mdp"></v-text-field>
+                            </v-row>
+                            <v-row justify="center">
+                                <v-btn @click="loginPost()">Login</v-btn>
+                            </v-row>
+                    </v-form>
+                </v-col>
             </v-row>
-            <v-row>
-                <v-btn @click="loginPost()">Login</v-btn>
-            </v-row>
-    </v-form>
-</v-container>
+        </v-card>
+    </v-col>
+</v-row>
 </template>
 
 <script>

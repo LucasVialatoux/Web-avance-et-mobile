@@ -1,7 +1,9 @@
 <template>
     <v-row>
-        <v-text-field v-if="label.type=='text'" :label="label.title" v-model="label.value" @input="update()"/>
-        <v-slider v-if="label.type=='range'" :label="label.title" :min="label.min" :max="label.max" v-model="label.value" @input="update()"></v-slider>
+        <v-col>
+            <v-text-field v-if="label.type=='text'" :label="label.title" v-model="label.value" @input="update()"/>
+            <v-slider v-if="label.type=='range'" :label="label.title" :min="label.min" :max="label.max" v-model="label.value" @input="update()"></v-slider>
+        </v-col>
     </v-row>
 </template>
 

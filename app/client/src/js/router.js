@@ -7,12 +7,12 @@ import Login from '../vue/login.vue'
 
 Vue.use(VueRouter)
 
-const Mymap = { render: h => h(MapView) }
-const Home = { render: h => h(Login)}
+//const Mymap = { render: h => h(MapView) }
+//const Home = { render: h => h(Login)}
 
 const routes = [
-    { path: '', component: Home },
-    { path: '/map', component: Mymap, meta: {requiresAuth: true} },
+    { path: '', component: Login },
+    { path: '/map', component: MapView, meta: {requiresAuth: true} },
 ]
 
 const router = new VueRouter({

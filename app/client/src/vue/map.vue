@@ -1,8 +1,8 @@
 <template>
-    <section>
+<v-row justify="center">
         <h2 id="titleMap">{{ title }}</h2>
         <div id="map"></div>
-    </section>
+</v-row>
 </template>
 
 <script>
