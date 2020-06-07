@@ -30,13 +30,13 @@
             <v-btn @click="changeTheme()" icon>
                 <v-icon>mdi-moon-waning-crescent</v-icon>
             </v-btn>
-            <v-btn exact v-if="!mini && !this.$store.state.auth.connected">
+            <v-btn tile depressed v-if="!mini && !this.$store.state.auth.connected">
                 Accueil
             </v-btn>
-            <v-btn exact v-if="!mini && this.$store.state.auth.connected">
+            <v-btn tile depressed v-if="!mini && this.$store.state.auth.connected">
                 <router-link to="/map">Map</router-link>
             </v-btn>
-            <v-btn exact v-if="!mini && this.$store.state.auth.connected">
+            <v-btn tile depressed v-if="!mini && this.$store.state.auth.connected">
                 <router-link to="/" class="nav-link" @click.native="disconnect()">Se Deconnecter</router-link>
             </v-btn>
         </v-app-bar>
@@ -84,6 +84,7 @@
                     }
                 }).then(response => {
                     this.$store.commit('disconnected')
+                    this.$store.commit('resetGameState')
                 })
             }
         }

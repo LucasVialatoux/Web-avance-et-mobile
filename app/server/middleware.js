@@ -12,6 +12,7 @@ exports.authenticate = (req, res, next) => {
         next()
     })
     .catch(error => {
-        console.log(error)
+        console.log(req.headers, req.headers['authentication'])
+        res.sendStatus(500)
     })
 }

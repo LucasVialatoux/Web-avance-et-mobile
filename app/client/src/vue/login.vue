@@ -3,7 +3,7 @@
     <v-col sm="12" md="8" lg="4">
         <v-card>
             <v-row justify="center">
-                <v-col sm="12" md="8" lg="4">
+                <v-col sm="11" md="8" lg="4">
                     <v-form>
                             <v-row justify="center">
                                 <v-text-field label="Login" v-model="login"></v-text-field>

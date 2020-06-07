@@ -34,18 +34,35 @@ export default {
             this.$store.commit("updateLat", position.coords.latitude)
             this.$store.commit("updateLon", position.coords.latitude)
             let coords = [position.coords.latitude, position.coords.longitude]
-            console.log(L.latLng(position.coords.latitude, position.coords.latitude).toString())
             //Ajout position
             L.circle(coords, {radius: 5, color: "red", fillColor: "#fff", fillOpacity: 0.0}).addTo(mymap)
-            this.$store.commit("updateGameData")
+            console.log(this.$store.getters.getToken)
+            if (this.$store.getters.getGameState) {
+                axios.put(`${window.origin}/game/resources/
+                ${this.$store.getters.getIdUser}/position?position=${this.$store.getters.getPosition}`,
+                {
+                    headers: {
+                        'Authentication': this.$store.getters.getToken
+                    }
+                })
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+                this.$store.commit("updateGameData")
+            } else {
+                this.$store.commit("updateGameState")
+            }
         }
     },
     mounted(){
         mymap = L.map('map');
         //connaître géolocalisation
         idSuivi = navigator.geolocation.watchPosition(position => {
-                this.updatePos(position);
-            });
+            this.updatePos(position);
+        });
         let DefaultIcon = L.icon({
             iconUrl: icon,
             shadowUrl: iconShadow
@@ -67,6 +84,5 @@ export default {
     destroyed() {
         navigator.geolocation.clearWatch(idSuivi);
     }
-
 }
 </script>

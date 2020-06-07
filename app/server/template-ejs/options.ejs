@@ -8,14 +8,81 @@
             <%-include('partials/header')%>
         </header>
         <main>
-            <% if (game) { %>
-                <% game.forEach(element => { %>
-                    <p><%-element.id%> <%-element.role%></p>
-                <% }); %>
+            <% console.log(game) %>
+            <% for (let element of game.data) { %>
+                <p><%-element.id%> <%-element.role%></p>
+            <% } %>
+            <% if (!game.gameStarted) { %>
+                <p>Pas de partie en cours</p>
+                <button id="gamestart">LANCE LA PARTIE</button>
+            <% } else { %>
+                <p>Une partie est en cours</p>
+                <button id="gameend">TERMINE LA PARTIE</button>
             <% } %>
         </main>
         <footer>
             <%-include('partials/footer')%>
         </footer>
+
+        <script>
+            async function httpRequest(url, options, body) {
+                var myInit = {
+                    method: options.method,
+                    mode: 'cors',
+                    cache: 'default'
+                };
+
+                if (options.headers !== undefined) {
+                    myInit.headers = options.headers
+                } else {
+                    myInit.headers = {}
+                }
+                myInit.headers['Origin'] = window.origin
+
+                if (options.method == 'GET' || options.method == 'get')
+                    myInit.headers['Accept'] = 'application/json'
+
+                if (body !== undefined) {
+                    myInit.body = JSON.stringify(body)
+                    myInit.headers['Content-Type'] = 'application/json'
+                }
+
+                let tmp = await fetch(url, myInit)
+
+                return tmp;
+            }
+            
+            <% if (!game.gameStarted) { %>
+                let button = document.getElementById('gamestart')
+
+                button.onclick = () => {
+                    httpRequest(`${window.origin}/game/start`, {
+                        method: 'POST',
+                    }).then(response => {
+                        console.log(response)
+                        if (response.ok) {
+                            location.reload()
+                        }
+                    }).catch(error => {
+                        console.log(error)
+                    })
+                }
+            <% } else { %>
+                let buttonend = document.getElementById('gameend')
+
+                buttonend.onclick = () => {
+                    httpRequest(`${window.origin}/game/end`, {
+                        method: 'POST',
+                    }).then(response => {
+                        console.log(response)
+                        if (response.ok) {
+                            location.reload()
+                        }
+                    }).catch(error => {
+                        console.log(error)
+                    })
+                }
+            <% } %>
+        </script>
     </body>
 </html>

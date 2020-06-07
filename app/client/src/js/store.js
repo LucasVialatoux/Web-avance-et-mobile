@@ -9,6 +9,7 @@ Vue.use(Vuex);
 const state = {
     title: 'MifMapApp',
     auth: {
+        user: undefined,
         token: undefined,
         connected: false
     },
@@ -25,7 +26,8 @@ const state = {
         lon : 4.865
     },
     game: {
-
+        data: undefined,
+        started: false
     }
 };
 
@@ -36,6 +38,18 @@ const getters = {
     },
     getLabelById: (state) => (id) => {
         return state.form.labels.find(label => label.id === id);
+    },
+    getToken(state) {
+        return state.auth.token
+    },
+    getIdUser(state) {
+        return state.auth.user
+    },
+    getPosition(state) {
+        return `${state.position.lat}:${state.position.lon}`
+    },
+    getGameState(state) {
+        return state.game.started
     }
 };
 
@@ -52,10 +66,12 @@ const mutations = {
     connected: (state, payload) => {
         const {token, user} = payload
 
+        state.auth.user = user
         state.auth.token = token
         state.auth.connected = true
     },
     disconnected: (state, payload) => {
+        state.auth.user = undefined
         state.auth.token = undefined
         state.auth.connected = false
     },
@@ -72,12 +88,30 @@ const mutations = {
             }
         })
         .then(response => {
-            console.log(response.data)
-            state.game = response.data
+            state.game.data = response.data
         })
         .catch(error => {
             console.log(error)
         })
+    },
+    updateGameState: (state, payload) => {
+        axios.get(`${window.origin}/game/state`, {
+            headers: {
+                'Authentication': state.auth.token
+            }
+        })
+        .then(response => {
+            state.game.started = response.data
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    },
+    resetGameState: (state, payload) => {
+        state.game = {
+            data: undefined,
+            started: false
+        }
     }
 };
 

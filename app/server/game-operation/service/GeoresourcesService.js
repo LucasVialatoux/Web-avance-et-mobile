@@ -1,26 +1,6 @@
 'use strict';
+
 var utils = require('../utils/writer.js');
-
-const template = {
-    "role" : "infected",
-    "id" : "toto",
-    "position" : "",
-    "ttl" : 0,
-    "url" : "http://example.com/users/toto/avatar.png",
-    "blurred" : true,
-    "status" : "alive",
-    "trophys" : [ {
-        "action" : "infected",
-        "id" : ""
-    }, {
-        "action" : "infected",
-        "id" : ""
-    }]
-}
-
-var examples = {};
-examples['application/json'] = [ {
-} ];
 
 function validURL(str) {
     var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
@@ -44,34 +24,17 @@ function validPosition(str){
  *
  * returns List
  **/
-exports.resourcesGET = function() {
+exports.resourcesGET = () => {
+    const data = require('../data').data.data
+
     return new Promise(function(resolve, reject) {
-        if (Object.keys(examples).length > 0) {
-            resolve(utils.respondWithCode(200,examples[Object.keys(examples)[0]]))
+        if (data.length > 0) {
+            resolve(utils.respondWithCode(200, data))
         } else {
             resolve();
         }
     });
 }
-
-exports.resourcesPOST = function(resourceId) {
-    return new Promise(function(resolve, reject) {
-        const tableau = examples[Object.keys(examples)[0]];
-
-        //Il y a des ressources
-        if (tableau.length > 0) {
-            //on parcours chaque objet
-            for (const objet in tableau) {
-                //on vérifie qu'on a le bon id
-                if (tableau[objet].id==resourceId){
-                    tableau[objet].url = url;
-                    resolve(utils.respondWithCode(204,"successful operation"));
-                }
-            }
-        }
-    });
-}
-
 
 /**
  * (re)set user's image URL
@@ -81,13 +44,15 @@ exports.resourcesPOST = function(resourceId) {
  * url String 
  * no response value expected for this operation
  **/
-exports.resourcesResourceIdImagePUT = function(resourceId,url) {
+exports.resourcesResourceIdImagePUT = (resourceId,url) => {
+    const data = require('../data').data.data
+
     return new Promise(function(resolve, reject) {
         //URL de l'image est valide
         if (validURL(url)){
             const goodOne = false;
 
-            const tableau = examples[Object.keys(examples)[0]];
+            const tableau = data
             
             //Il y a des ressources
             if (tableau.length > 0) {
@@ -117,12 +82,14 @@ exports.resourcesResourceIdImagePUT = function(resourceId,url) {
  * position LatLng User's position
  * no response value expected for this operation
  **/
-exports.resourcesResourceIdPositionPUT = function(resourceId,position) {
+exports.resourcesResourceIdPositionPUT = (resourceId,position) => {
+    const data = require('../data').data.data
+
     return new Promise(function(resolve, reject) {
         //Position valide
         if (validPosition(position)){
             const goodOne = false;
-            const tableau = examples[Object.keys(examples)[0]];
+            const tableau = data
             //Il y a des ressources
             if (tableau.length > 0) {
                 //on parcours chaque objet
