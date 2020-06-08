@@ -26,8 +26,12 @@ const state = {
         lon : 4.865
     },
     game: {
-        data: undefined,
+        data: [],
         started: false
+    },
+    map: {
+        map: undefined,
+        markers: []
     }
 };
 
@@ -48,8 +52,17 @@ const getters = {
     getPosition(state) {
         return `${state.position.lat}:${state.position.lon}`
     },
+    getGameData(state) {
+        return state.game.data
+    },
     getGameState(state) {
         return state.game.started
+    },
+    getMapMap(state) {
+        return state.map.map
+    },
+    getMapMarkers(state) {
+        return state.map.markers
     }
 };
 
@@ -109,9 +122,15 @@ const mutations = {
     },
     resetGameState: (state, payload) => {
         state.game = {
-            data: undefined,
+            data: [],
             started: false
         }
+    },
+    updateMap: (state, map) => {
+        state.map.map = map
+    },
+    updateMarkers: (state, markers) => {
+        state.map.markers = markers
     }
 };
 

@@ -21,22 +21,7 @@ const template = {
 class Data {
     constructor() {
         this.gameStarted = false
-        this.data = [{
-            "role" : "infected",
-            "id" : "toto",
-            "position" : "",
-            "ttl" : 0,
-            "url" : "http://example.com/users/toto/avatar.png",
-            "blurred" : true,
-            "status" : "alive",
-            "trophys" : [ {
-                "action" : "infected",
-                "id" : ""
-            }, {
-                "action" : "infected",
-                "id" : ""
-            }]
-        }]
+        this.data = []
     }
     
     fillData() {
@@ -47,8 +32,22 @@ class Data {
                 axios.get(`${conf.origin}/auth/user/${user}`)
                 .then(response =>  {
                     if (response.data.connected) {
-                        let tmp = template;
-                        tmp.id = response.data.login
+                        let tmp = {
+                            "role" : "infected",
+                            "id" : response.data.login,
+                            "position" : "",
+                            "ttl" : 0,
+                            "url" : "http://example.com/users/toto/avatar.png",
+                            "blurred" : true,
+                            "status" : "alive",
+                            "trophys" : [ {
+                                "action" : "infected",
+                                "id" : ""
+                            }, {
+                                "action" : "infected",
+                                "id" : ""
+                            }]
+                        }
                         this.data.push(tmp)
                     }
                 })
@@ -60,6 +59,18 @@ class Data {
         .catch(error => {
             throw 'Prob requete users'
         })
+
+        let cible = {
+            "role" : 'cible',
+            "id" : 'cible',
+            "position" : '45.78:4.86',
+            "ttl" : 0,
+            "url" : "http://example.com/users/toto/avatar.png",
+            "blurred" : false,
+            "status" : "alive",
+            "trophys" : []
+        }
+        this.data.push(cible)
     }
 
     endGame() {

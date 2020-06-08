@@ -11,13 +11,12 @@ import {default as myHeader} from './header.vue';
 import {default as myForm} from './form.vue';
 import {default as myMap} from './map.vue';
 import initMap from '../js/map.js';
-import updateMap from '../js/map.js';
+//import updateMap from '../js/map.js';
 import L from 'leaflet';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 
 let idSuivi;
-let mymap;
 
 const axios = require('axios')
 
@@ -32,33 +31,44 @@ export default {
         updatePos: function(position) {
             //MàJ store
             this.$store.commit("updateLat", position.coords.latitude)
-            this.$store.commit("updateLon", position.coords.latitude)
+            this.$store.commit("updateLon", position.coords.longitude)
             let coords = [position.coords.latitude, position.coords.longitude]
             //Ajout position
-            L.circle(coords, {radius: 5, color: "red", fillColor: "#fff", fillOpacity: 0.0}).addTo(mymap)
-            console.log(this.$store.getters.getToken)
+            //L.circle(coords, {radius: 5, color: "red", fillColor: "#fff", fillOpacity: 0.0}).addTo(this.$store.getters.getMapMap)
             if (this.$store.getters.getGameState) {
-                axios.put(`${window.origin}/game/resources/
-                ${this.$store.getters.getIdUser}/position?position=${this.$store.getters.getPosition}`,
+                axios.put(`${window.origin}/game/resources/` + 
+                `${this.$store.getters.getIdUser}/position?position=${this.$store.getters.getPosition}`, undefined,
                 {
                     headers: {
                         'Authentication': this.$store.getters.getToken
                     }
                 })
                 .then(response => {
-                    console.log(response)
+                    this.$store.commit("updateGameData")
+                    this.updateMap()
                 })
                 .catch(error => {
                     console.log(error)
                 })
-                this.$store.commit("updateGameData")
             } else {
                 this.$store.commit("updateGameState")
             }
+        },
+        updateMap() {
+            for (let mark of this.$store.getters.getMapMarkers) {
+                this.$store.getters.getMapMap.removeLayer(mark)
+            }
+            let markArray = [];
+            for (let resource of this.$store.getters.getGameData) {
+                let marker = L.marker(resource.position.split(':')).addTo(this.$store.getters.getMapMap).bindPopup(resource.id)
+                markArray.push(marker)
+            }
+            //let marker = L.marker([45.78207, 4.86559]).addTo(this.$store.getters.getMapMap).bindPopup('Entrée du bâtiment<br><strong>Nautibus</strong>.').openPopup();
+            this.$store.commit("updateMarkers", markArray)
         }
     },
-    mounted(){
-        mymap = L.map('map');
+    mounted() {
+        let mymap = L.map('map');
         //connaître géolocalisation
         idSuivi = navigator.geolocation.watchPosition(position => {
             this.updatePos(position);
@@ -77,9 +87,10 @@ export default {
                 'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
             id: 'mapbox.streets'
         }).addTo(mymap);
-        L.marker([45.78207, 4.86559]).addTo(mymap).bindPopup('Entrée du bâtiment<br><strong>Nautibus</strong>.').openPopup();
 
         mymap.setView([this.$store.state.form.labels[0].value, this.$store.state.form.labels[1].value], this.$store.state.form.labels[2].value);
+        
+        this.$store.commit('updateMap', mymap);
     },
     destroyed() {
         navigator.geolocation.clearWatch(idSuivi);
