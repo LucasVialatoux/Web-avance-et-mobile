@@ -17,7 +17,7 @@
   "author": "paul & lucas",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "connect": "^3.7.0",
     "ejs": "^3.0.1",
     "emojis-list": "^3.0.0",
